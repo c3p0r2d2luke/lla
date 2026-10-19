@@ -2005,8 +2005,8 @@ const nameInput = document.getElementById("nameInput");
 const saveNameBtn = document.getElementById("saveNameButton");
 
 // ------------------------ Supabase Setup ------------------------
-const supabaseUrl = window.CHAT_CONFIG.SUPABASE_URL;
-const supabaseKey = window.CHAT_CONFIG.SUPABASE_PUBLISHABLE_KEY;
+const supabaseUrl = new URL(window.CHAT_CONFIG.SUPABASE_URL, window.location.origin).toString();
+const supabaseKey = "chat-browser-proxy";
 const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey, {
   auth: {
     persistSession: true,

@@ -4,7 +4,8 @@ The chat app brings people together with real-time messages, channels, direct
 messages, reactions, profiles, and optional integrations such as Discord,
 Spotify, GIF search, and push notifications. The browser interface lives in
 `public/`; its TypeScript source is in `src/`. A small Node.js server serves
-the app and supplies its public runtime configuration.
+the app, supplies its runtime configuration, and proxies browser requests to
+Supabase.
 
 ## Getting started from a clone
 
@@ -26,8 +27,10 @@ you'll need to configure your own before the app can connect.
    `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `SPOTIFY_CLIENT_ID`,
    `DISCORD_CLIENT_ID`, `DISCORD_REDIRECT_URI`, and `VAPID_PUBLIC_KEY`.
    Although some integrations are optional to users, the server still expects
-   each setting to be present. A working chat also needs a Supabase project
-   with the required schema and backend functions.
+   each setting to be present. The Supabase URL and publishable key stay on the
+   server; browser requests, including Realtime connections, go through the
+   chat server's same-origin proxy. A working chat also needs a Supabase
+   project with the required schema and backend functions.
 4. Build and run the app:
 
    ```sh
@@ -38,16 +41,21 @@ you'll need to configure your own before the app can connect.
 
 5. Open `http://localhost:3501/s/chat/`.
 
-Keep `chat/.env` on your machine; don't commit it. The values above are
-intentionally sent to the browser and must be public identifiers or
-publishable keys. **Never** put service-role keys, OAuth client secrets,
-Discord bot tokens, or private push-signing keys there. Store backend secrets
-in the appropriate Supabase Edge Function secrets instead.
+Keep `chat/.env` on your machine; don't commit it. The chat server keeps the
+Supabase URL and publishable key and adds the key to requests it forwards to
+Supabase. Browser configuration and browser-to-chat requests use a placeholder
+key, not the configured Supabase key. This does not replace Supabase Row Level
+Security (RLS): enable appropriate policies for every exposed table and
+storage bucket. **Never** put service-role keys, OAuth client secrets, Discord
+bot tokens, or private push-signing keys in this file. Store backend secrets in
+the appropriate Supabase Edge Function secrets instead.
 
 `npm run start:chat` builds the browser assets and server before starting it.
 For a build without starting the server, run `npm run build:chat`. The server
 reads browser assets from `public/`; TypeScript source and `.env` files are
-not served.
+not served. In production, run this Node.js server (or configure an equivalent
+server-side proxy); serving `public/` as a static site alone will not proxy
+Supabase requests.
 
 ## Configuration notes
 

@@ -5,6 +5,7 @@ import { createServer } from "node:http";
 import { isIP } from "node:net";
 import { dirname, extname, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
+import httpProxy from "http-proxy";
 
 const serverDirectory = dirname(fileURLToPath(import.meta.url));
 const publicDirectory = resolve(
@@ -68,14 +69,32 @@ function requiredEnvironmentValue(name: string): string {
   return value;
 }
 
+const supabaseUrl = requiredEnvironmentValue("SUPABASE_URL");
+const supabaseKey = requiredEnvironmentValue("SUPABASE_PUBLISHABLE_KEY");
+const supabaseProxyPath = chatBasePath ? `${chatBasePath}/supabase` : "/supabase";
 const publicConfig = {
-  SUPABASE_URL: requiredEnvironmentValue("SUPABASE_URL"),
-  SUPABASE_PUBLISHABLE_KEY: requiredEnvironmentValue("SUPABASE_PUBLISHABLE_KEY"),
+  SUPABASE_URL: supabaseProxyPath,
   SPOTIFY_CLIENT_ID: requiredEnvironmentValue("SPOTIFY_CLIENT_ID"),
   DISCORD_CLIENT_ID: requiredEnvironmentValue("DISCORD_CLIENT_ID"),
   DISCORD_REDIRECT_URI: requiredEnvironmentValue("DISCORD_REDIRECT_URI"),
   VAPID_PUBLIC_KEY: requiredEnvironmentValue("VAPID_PUBLIC_KEY"),
 };
+const supabaseProxy = httpProxy.createProxyServer({
+  target: supabaseUrl,
+  changeOrigin: true,
+  ws: true,
+});
+function replaceProxyKey(proxyRequest: import("node:http").ClientRequest): void {
+  proxyRequest.setHeader("apikey", supabaseKey);
+  const upstreamUrl = new URL(proxyRequest.path, "http://localhost");
+  if (upstreamUrl.searchParams.has("apikey")) {
+    upstreamUrl.searchParams.set("apikey", supabaseKey);
+    proxyRequest.path = `${upstreamUrl.pathname}${upstreamUrl.search}`;
+  }
+}
+
+supabaseProxy.on("proxyReq", replaceProxyKey);
+supabaseProxy.on("proxyReqWs", replaceProxyKey);
 const mimeTypes: Record<string, string> = {
   ".css": "text/css; charset=utf-8",
   ".html": "text/html; charset=utf-8",
@@ -100,11 +119,6 @@ const server = createServer(async (request, response) => {
   response.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
   response.setHeader("X-Frame-Options", "SAMEORIGIN");
 
-  if (request.method !== "GET" && request.method !== "HEAD") {
-    response.writeHead(405, { Allow: "GET, HEAD" }).end();
-    return;
-  }
-
   let pathname: string;
   let requestUrl: URL;
   try {
@@ -117,6 +131,38 @@ const server = createServer(async (request, response) => {
 
   if (pathname.split("/").some((part) => part.startsWith("."))) {
     response.writeHead(404).end("Not found");
+    return;
+  }
+
+  if (pathname === supabaseProxyPath || pathname.startsWith(`${supabaseProxyPath}/`)) {
+    const upstreamPath = pathname.slice(supabaseProxyPath.length) || "/";
+    const allowedApi = [
+      "/auth/v1",
+      "/rest/v1",
+      "/storage/v1",
+      "/functions/v1",
+      "/realtime/v1",
+      "/graphql/v1",
+    ].some((prefix) => upstreamPath === prefix || upstreamPath.startsWith(`${prefix}/`));
+    if (!allowedApi) {
+      response.writeHead(404).end("Not found");
+      return;
+    }
+
+    request.url = `${upstreamPath}${requestUrl.search}`;
+    supabaseProxy.web(request, response, {}, (error) => {
+      console.error("Supabase proxy request failed:", error);
+      if (!response.headersSent) {
+        response.writeHead(502).end("Supabase is temporarily unavailable");
+      } else {
+        response.destroy(error);
+      }
+    });
+    return;
+  }
+
+  if (request.method !== "GET" && request.method !== "HEAD") {
+    response.writeHead(405, { Allow: "GET, HEAD" }).end();
     return;
   }
 
@@ -214,6 +260,35 @@ const server = createServer(async (request, response) => {
     console.error("Chat asset request failed:", error);
     response.writeHead(500).end("Internal server error");
   }
+});
+
+server.on("upgrade", (request, socket, head) => {
+  let requestUrl: URL;
+  let pathname: string;
+  try {
+    requestUrl = new URL(request.url || "/", "http://localhost");
+    pathname = decodeURIComponent(requestUrl.pathname);
+  } catch {
+    socket.destroy();
+    return;
+  }
+
+  if (pathname !== supabaseProxyPath && !pathname.startsWith(`${supabaseProxyPath}/`)) {
+    socket.destroy();
+    return;
+  }
+
+  const upstreamPath = pathname.slice(supabaseProxyPath.length) || "/";
+  if (!upstreamPath.startsWith("/realtime/v1/")) {
+    socket.destroy();
+    return;
+  }
+
+  request.url = `${upstreamPath}${requestUrl.search}`;
+  supabaseProxy.ws(request, socket, head, {}, (error) => {
+    console.error("Supabase realtime proxy request failed:", error);
+    socket.destroy();
+  });
 });
 
 server.listen(port, host, () => {
