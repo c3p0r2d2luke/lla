@@ -1,0 +1,124 @@
+@import 'https://a.storyblok.com/f/212319/x/e6ccda03b8/blueprint-blank.css';
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+@media (max-width: 700px) {
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.storyblok-page {
+  width: 100%;
+}
+
+.storyblok-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 1rem;
+  width: 100%;
+  align-items: start;
+}
+
+.storyblok-feature {
+  min-width: 0;
+}
+
+@media (max-width: 700px) {
+  .storyblok-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.storyblok-grid {
+  padding: 1rem 0;
+}
+
+.storyblok-feature {
+  min-width: 0;
+  padding: 1.5rem;
+  background: #f1f1f1;
+  border-radius: 0.75rem;
+  color: #222;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 8%);
+}
+
+.storyblok-feature h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+@media (prefers-color-scheme: dark) {
+  .storyblok-feature {
+    background: #2f2f2f;
+    color: #f5f5f5;
+  }
+
+.author-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.blog {
+  width: 100%;
+  max-width: 900px;
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  text-align: left;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 8%);
+  color: #454040;
+}
+
+.blog h1 {
+  margin: 0 0 1rem;
+  text-align: left;
+}
+
+.blog-body {
+  text-align: left;
+}
+
+.blog-post-author,
+.author {
+  text-align: left;
+}
+
+.blog-author {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.blog-author .author {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.blog-author .author-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.blog-body {
+  display: block;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+
+}
