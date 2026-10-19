@@ -1,111 +1,92 @@
 # Chat app
 
-The Node TypeScript server serves the chat HTML shell and a generated,
-explicitly allowlisted browser configuration script from `.env`.
-Browser scripts are TypeScript in `src/` and compile to JavaScript in `public/`;
-the existing realtime UI, interactions, and styles remain browser-side.
+The chat app brings people together with real-time messages, channels, direct
+messages, reactions, profiles, and optional integrations such as Discord,
+Spotify, GIF search, and push notifications. The browser interface lives in
+`public/`; its TypeScript source is in `src/`. A small Node.js server serves
+the app and supplies its public runtime configuration.
 
-## Configure and run
+## Getting started from a clone
 
-Create a private `chat/.env` from `.env.example`. It configures the local server
-and stores the public identifiers/keys that the browser needs. The server
-serves those allowlisted values as a generated configuration script, so they
-remain visible to visitors even though the `.env` file itself is not served.
-Never put Supabase service-role keys, OAuth client secrets, bot tokens, or
-private signing keys in this file; Supabase Edge Functions continue to own
-their server-side secrets.
+The chat needs a Supabase project configured for this app. A clone does not
+come with the original project's credentials or a ready-to-use backend, so
+you'll need to configure your own before the app can connect.
 
-```sh
-# Run these commands from the s/ directory.
-npm ci
-chmod 600 chat/.env
-npm run check:chat-core
-npm run check:chat-server
-npm run start:chat
-```
+1. Install a current Node.js release and npm.
+2. From the repository root, run:
 
-`start:chat` compiles the browser and server TypeScript before starting the
-server, so the generated browser JavaScript is always present after a deploy.
-The server reads assets exclusively from `public/`; `.env` and TypeScript
-sources are never served.
+   ```sh
+   cd s
+   npm ci
+   cp chat/.env.example chat/.env
+   ```
 
-Set `IS_UNDER_MATINENCE=true` in `chat/.env` to replace the chat entry page
-with a maintenance notice. Set it to `false` (or remove it) and restart the
-server to serve the chat normally.
+3. Edit `chat/.env` and add the configuration for your own Supabase project
+   and provider apps. The server currently requires non-empty values for
+   `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `SPOTIFY_CLIENT_ID`,
+   `DISCORD_CLIENT_ID`, `DISCORD_REDIRECT_URI`, and `VAPID_PUBLIC_KEY`.
+   Although some integrations are optional to users, the server still expects
+   each setting to be present. A working chat also needs a Supabase project
+   with the required schema and backend functions.
+4. Build and run the app:
 
-## Chat commands
+   ```sh
+   npm run check:chat-core
+   npm run check:chat-server
+   npm run start:chat
+   ```
 
-The only implemented slash command is:
+5. Open `http://localhost:3501/s/chat/`.
 
-| Command | Description | Notes |
-|---|---|---|
-| `/gif <search>` | Search for a GIF and choose one to send, for example `/gif cats`. | Requires the server's **Send GIFs** permission (or a legacy Manager/Admin role). In the picker, choose a result to send it; press Enter to send the first result or Escape to close. |
+Keep `chat/.env` on your machine; don't commit it. The values above are
+intentionally sent to the browser and must be public identifiers or
+publishable keys. **Never** put service-role keys, OAuth client secrets,
+Discord bot tokens, or private push-signing keys there. Store backend secrets
+in the appropriate Supabase Edge Function secrets instead.
 
-Type `/` in the message box to see command suggestions. `/help`, `/ping`,
-`/echo`, `/me`, and `/clear` are not currently implemented.
+`npm run start:chat` builds the browser assets and server before starting it.
+For a build without starting the server, run `npm run build:chat`. The server
+reads browser assets from `public/`; TypeScript source and `.env` files are
+not served.
 
-## Build, check, and deploy commands
+## Configuration notes
+
+- `HOST` and `PORT` control the local server address (defaults: `0.0.0.0` and
+  `3501`).
+- `CHAT_BASE_PATH` sets the URL prefix (default: `/s/chat`).
+- `IS_UNDER_MATINENCE=true` shows a maintenance page instead of the chat.
+- `DISCORD_REDIRECT_URI` must exactly match a redirect URL registered for
+  your own Discord application. Update the local example value in `chat/.env`
+  if your server uses a different address or path.
+- Discord, Spotify, push notifications, and GIF resolution may also need
+  their own provider settings and Supabase Edge Functions. Configure callback
+  URLs and backend secrets in those services; they are not supplied by this
+  repository.
+
+## Features
+
+- Real-time channels and direct messages
+- Message history that loads older messages as you scroll
+- Profiles, reactions, presence, and server/channel controls
+- Optional Discord and Spotify connections
+- GIF search with `/gif <search>` (requires the server's **Send GIFs**
+  permission or a legacy Manager/Admin role)
+
+Type `/` in the message box to see available command suggestions.
+
+## Useful commands
 
 Run these from `s/`:
 
-```sh
-# Compile browser assets and the Node server
-npm run build:chat
+| Command | Purpose |
+| --- | --- |
+| `npm ci` | Install the versions recorded in the lockfile |
+| `npm run check:chat-core` | Type-check selected browser modules |
+| `npm run check:chat-server` | Type-check the Node.js server |
+| `npm run build:chat` | Build the browser assets and server |
+| `npm run start:chat` | Build and run the local server |
 
-# Run the chat-specific TypeScript checks
-npm run check:chat-core
-npm run check:chat-server
-
-# Build, then run the chat server in the foreground (uses chat/.env)
-npm run start:chat
-
-# After building changed code, restart the installed systemd service
-sudo systemctl restart lla-chat.service
-sudo systemctl status lla-chat.service --no-pager
-
-# Inspect recent service logs
-sudo journalctl -u lla-chat.service -n 100 --no-pager
-```
-
-For a source deployment, update the checkout first, then build and restart:
-
-```sh
-git pull
-npm run build:chat
-sudo systemctl restart lla-chat.service
-```
-
-Check the service's actual checkout and systemd configuration before using
-these deployment commands on another host; service names and paths can differ.
-To verify the runtime browser configuration is being served, request
-`https://<your-domain>/s/chat/chat-config.js`. This script intentionally
-contains public client configuration; do not put server-side secrets in it.
-
-For a Nest deployment, set the site's upstream port to `PORT` (default `3501`)
-and keep Caddy's automatic HTTPS termination enabled. The Node server speaks
-plain HTTP behind Caddy and defaults to `HOST=0.0.0.0`, which allows a proxy in
-a separate container/network namespace to reach it. If Caddy runs on the same
-host, `HOST=127.0.0.1` is also suitable. Do not configure TLS in this app.
-Keep the upstream port private; expose the site through Nest's HTTPS proxy.
-
-The default `CHAT_BASE_PATH=/s/chat` supports both reverse-proxy styles: Caddy
-or a fronting web server may preserve `/s/chat/` when forwarding, or strip that
-prefix. The shell and its relative assets continue to work either way. Point
-the HTTPS callback URLs in Discord, Spotify, and Supabase at the public
-`https://<your-domain>/s/chat/...` paths, not the internal HTTP upstream.
-
-Browser files under `src/` are TypeScript; the `.js` files in `public/` are
-generated build output. The build also compiles the Node server to
-`dist/server.js`. Browser scripts remain classic scripts in their existing
-load order to preserve the current global-based application.
-
-Channel and direct-message history initially loads the newest 100 messages.
-Scroll to the top of the message list to automatically prepend the next 100
-older messages while preserving your place in the conversation. Loaded
-messages remain available as you continue scrolling; there are no history
-navigation buttons. Discord history polling is limited to the currently open
-channel.
-
-After updating the IP logging Edge Function, deploy it to the linked Supabase
-project with `supabase functions deploy log-ip`; Caddy only handles the chat
-site's incoming HTTPS traffic and cannot apply changes to Supabase endpoints.
+The TypeScript files in `src/` compile to browser JavaScript in `public/` and
+to the server output in `dist/`. Browser scripts are loaded in a specific
+order because they share globals; keep that order intact when changing
+`public/index.html`.
