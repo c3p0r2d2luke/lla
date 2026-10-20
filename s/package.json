@@ -24,8 +24,12 @@
   "homepage": "https://github.com/c3p0r2d2luke/letslearnalgebra#readme",
   "devDependencies": {
     "@supabase/supabase-js": "^2.117.2",
+    "@types/http-proxy": "^1.17.17",
     "@types/node": "^26.6.4",
     "eslint": "^10.0.3",
     "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "http-proxy": "^1.18.1"
   }
 }
