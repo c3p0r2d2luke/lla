@@ -1,9 +1,6 @@
 # Let's Learn Algebra
 
-Welcome! This repository contains the source for Let's Learn Algebra, a
-browser-based site with learning pages, games, and interactive projects. Most
-of the site is made from static files, so you can browse and work on it without
-setting up a web framework or build system.
+Let's Learn Algebra is a unblocked g*me site for schools. It has CloudMoon, GN-Math, and more! 
 
 ## Find your way around
 

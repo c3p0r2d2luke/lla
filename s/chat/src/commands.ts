@@ -594,7 +594,7 @@ function subscribeToVoiceSignaling(channelId) {
                 await peerConn.setLocalDescription(answer);
 
                 // Send Answer back
-                await supabaseClient
+                const { error: answerError } = await supabaseClient
                   .from("voice_signaling")
                   .insert({
                     channel_id: channelId,
@@ -602,6 +602,7 @@ function subscribeToVoiceSignaling(channelId) {
                     to_username: data.from_username,
                     sdp: JSON.stringify(answer)
                   });
+                if (answerError) throw answerError;
               } else if (sdpObj.type === 'answer') {
                 // Answers should be applied as remote description
                 await peerConn.setRemoteDescription(sdpObj);
@@ -651,7 +652,8 @@ function subscribeToVoiceSignaling(channelId) {
         }
       }
     )
-    .subscribe((status) => {
+    .subscribe((status, error) => {
+      if (error) console.error("Voice signaling Realtime error:", error);
       console.log(`Realtime Status: ${status}`);
     });
 }
@@ -749,7 +751,8 @@ function subscribeToVoiceRoom(channelId) {
         else voiceParticipantState.delete(p.username);
       }
     )
-    .subscribe((status) => {
+    .subscribe((status, error) => {
+      if (error) console.error("Voice room Realtime error:", error);
       console.log(`Voice Room Realtime Status: ${status}`);
     });
 }
@@ -871,7 +874,7 @@ peerConn.ontrack = (event) => {
   peerConn.onicecandidate = async (event) => {
     if (event.candidate) {
       try {
-        await supabaseClient
+        const { error } = await supabaseClient
           .from("voice_signaling")
           .insert({
             channel_id: channelId,
@@ -879,6 +882,7 @@ peerConn.ontrack = (event) => {
             to_username: targetUsername,
             ice_candidate: event.candidate.toJSON()
           });
+        if (error) throw error;
       } catch (err) {
         console.error("Failed to send ICE candidate:", err);
       }
@@ -889,7 +893,7 @@ peerConn.ontrack = (event) => {
     const offer = await peerConn.createOffer();
     await peerConn.setLocalDescription(offer);
 
-    await supabaseClient
+    const { error } = await supabaseClient
       .from("voice_signaling")
       .insert({
         channel_id: channelId,
@@ -897,10 +901,14 @@ peerConn.ontrack = (event) => {
         to_username: targetUsername,
         sdp: JSON.stringify(offer)
       });
+    if (error) throw error;
 
     currentPeerConnections.set(targetUsername, peerConn);
     console.log(`✅ Offer sent to ${targetUsername}`);
   } catch (err) {
+    peerConn.close();
+    pendingIceCandidates.delete(targetUsername);
+    connectionStates.delete(targetUsername);
     console.error("❌ Failed to create/send offer:", err);
   }
 }
@@ -970,11 +978,12 @@ async function joinVoiceChannel(channelId) {
     if (sendBtn) sendBtn.disabled = true;
 
     try {
-      await supabaseClient
+      const { error: deleteError } = await supabaseClient
         .from("voice_room_participants")
         .delete()
         .eq("channel_id", channelId)
         .eq("username", username);
+      if (deleteError) throw deleteError;
 
       const { error: insertError } = await supabaseClient
         .from("voice_room_participants")
@@ -2575,586 +2584,6 @@ async function getMemberPermissions(serverId, memberId) {
 
   return finalPerms;
 }
-
-// ================= VOICE CHAT TEST FUNCTION =================
-// Comprehensive voice chat diagnostic tool
-interface VoiceDiagnosticResults {
-  browserSupport: Record<string, boolean>;
-  permissions: Record<string, string>;
-  devices: Record<string, unknown>;
-  webrtc: Record<string, unknown>;
-  audio: Record<string, unknown>;
-  database: Record<string, unknown>;
-  voiceState: Record<string, unknown>;
-  summary: string[];
-  routing?: unknown;
-  peerFlow?: unknown;
-  deviceSwitching?: unknown;
-  monitoring?: unknown;
-}
-
-window.testVoiceChat = async function(): Promise<VoiceDiagnosticResults> {
-  console.log('🔬 Starting Voice Chat Diagnostic Test...');
-  
-  const results: VoiceDiagnosticResults = {
-    browserSupport: {},
-    permissions: {},
-    devices: {},
-    webrtc: {},
-    audio: {},
-    database: {},
-    voiceState: {},
-    summary: []
-  };
-
-  try {
-    // 1. Browser Support Tests
-    console.log('🌐 Testing browser support...');
-    results.browserSupport.getUserMedia = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
-    results.browserSupport.RTCPeerConnection = !!(window.RTCPeerConnection || window.webkitRTCPeerConnection);
-    results.browserSupport.AudioContext = !!(window.AudioContext || window.webkitAudioContext);
-    
-    if (!results.browserSupport.getUserMedia) {
-      results.summary.push('❌ getUserMedia not supported - voice chat impossible');
-    }
-    if (!results.browserSupport.RTCPeerConnection) {
-      results.summary.push('❌ RTCPeerConnection not supported - WebRTC impossible');
-    }
-    if (!results.browserSupport.AudioContext) {
-      results.summary.push('⚠️ AudioContext not supported - limited audio features');
-    }
-
-    // 2. Permission Tests
-    console.log('🔐 Testing microphone permissions...');
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
-      results.permissions.microphone = 'granted';
-      stream.getTracks().forEach(track => track.stop());
-      results.summary.push('✅ Microphone access granted');
-    } catch (permErr) {
-      results.permissions.microphone = 'denied';
-      results.permissions.error = permErr.name;
-      results.summary.push(`❌ Microphone access denied: ${permErr.name} - ${permErr.message}`);
-    }
-
-    // 3. Audio Device Enumeration
-    console.log('🎤 Checking audio devices...');
-    try {
-      const devices = await navigator.mediaDevices.enumerateDevices();
-      results.devices.audioInputs = devices.filter(d => d.kind === 'audioinput').length;
-      results.devices.audioOutputs = devices.filter(d => d.kind === 'audiooutput').length;
-      results.devices.details = devices.filter(d => d.kind === 'audioinput' || d.kind === 'audiooutput');
-      
-      if (results.devices.audioInputs === 0) {
-        results.summary.push('❌ No audio input devices found');
-      } else {
-        results.summary.push(`✅ Found ${results.devices.audioInputs} audio input devices`);
-      }
-      
-      if (results.devices.audioOutputs === 0) {
-        results.summary.push('❌ No audio output devices found');
-      } else {
-        results.summary.push(`✅ Found ${results.devices.audioOutputs} audio output devices`);
-      }
-    } catch (devErr) {
-      results.devices.error = devErr.message;
-      results.summary.push(`❌ Device enumeration failed: ${devErr.message}`);
-    }
-
-    // 4. WebRTC Connection Test
-    console.log('🔗 Testing WebRTC connectivity...');
-    try {
-      const testConn = new RTCPeerConnection({
-        iceServers: [
-          { urls: "stun:stun.l.google.com:19302" },
-          { urls: "stun:stun1.l.google.com:19302" }
-        ]
-      });
-      
-      results.webrtc.connectionCreated = true;
-      
-      // Test ICE candidate generation
-      testConn.onicecandidate = (event) => {
-        if (event.candidate) {
-          results.webrtc.iceCandidates = true;
-          console.log('🧊 ICE candidate generated successfully');
-        }
-      };
-      
-      // Create a test offer to verify SDP generation
-      const offer = await testConn.createOffer();
-      results.webrtc.offerCreated = true;
-      results.webrtc.sdpValid = !!offer.sdp;
-      
-      testConn.close();
-      results.summary.push('✅ WebRTC connection test passed');
-    } catch (webrtcErr) {
-      results.webrtc.error = webrtcErr.message;
-      results.summary.push(`❌ WebRTC test failed: ${webrtcErr.message}`);
-    }
-
-    // 5. Audio Element Test
-    console.log('🔊 Testing audio element creation...');
-    try {
-      const testAudio = new Audio();
-      results.audio.elementCreated = true;
-      results.audio.canPlay = typeof testAudio.play === 'function';
-      
-      // Test volume control
-      testAudio.volume = 0.5;
-      results.audio.volumeControl = testAudio.volume === 0.5;
-      
-      results.summary.push('✅ Audio element test passed');
-    } catch (audioErr) {
-      results.audio.error = audioErr.message;
-      results.summary.push(`❌ Audio element test failed: ${audioErr.message}`);
-    }
-
-    // 6. Database Connection Test (if available)
-    console.log('🗄️ Testing database connection...');
-    if (typeof supabaseClient !== 'undefined') {
-      try {
-        const { data, error } = await supabaseClient
-          .from('voice_room_participants')
-          .select('count');
-        
-        if (error) {
-          results.database.error = error.message;
-          results.summary.push(`⚠️ Database test failed: ${error.message}`);
-        } else {
-          results.database.connected = true;
-          results.summary.push('✅ Database connection successful');
-        }
-      } catch (dbErr) {
-        results.database.error = dbErr.message;
-        results.summary.push(`❌ Database test failed: ${dbErr.message}`);
-      }
-    } else {
-      results.database.available = false;
-      results.summary.push('⚠️ Supabase client not available');
-    }
-
-    // 7. Current Voice State Check
-    console.log('🎯 Checking current voice state...');
-    if (typeof currentVoiceChannelId !== 'undefined') {
-      results.voiceState.currentChannelId = currentVoiceChannelId;
-      results.voiceState.inVoiceChannel = !!currentVoiceChannelId;
-      results.voiceState.localStream = !!localStream;
-      results.voiceState.peerConnections = currentPeerConnections ? currentPeerConnections.size : 0;
-      results.voiceState.participantState = voiceParticipantState ? voiceParticipantState.size : 0;
-      
-      if (currentVoiceChannelId) {
-        results.summary.push(`ℹ️ Currently in voice channel: ${currentVoiceChannelId}`);
-      }
-    }
-
-    // 8. Audio Context Test
-    console.log('🎵 Testing audio context...');
-    try {
-      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      results.audio.contextCreated = true;
-      results.audio.sampleRate = audioCtx.sampleRate;
-      results.audio.state = audioCtx.state;
-      
-      // Test analyser node creation
-      const analyser = audioCtx.createAnalyser();
-      results.audio.analyserCreated = true;
-      
-      audioCtx.close();
-      results.summary.push('✅ Audio context test passed');
-    } catch (audioCtxErr) {
-      results.audio.contextError = audioCtxErr.message;
-      results.summary.push(`❌ Audio context test failed: ${audioCtxErr.message}`);
-    }
-
-  } catch (testErr) {
-    results.summary.push(`❌ Test suite error: ${testErr.message}`);
-  }
-
-  // Output results
-  console.group('🔬 Voice Chat Diagnostic Results');
-  console.log('Browser Support:', results.browserSupport);
-  console.log('Permissions:', results.permissions);
-  console.log('Devices:', results.devices);
-  console.log('WebRTC:', results.webrtc);
-  console.log('Audio:', results.audio);
-  console.log('Database:', results.database);
-  if (results.voiceState) {
-    console.log('Voice State:', results.voiceState);
-  }
-  console.log('Summary:', results.summary);
-  console.groupEnd();
-
-  // Return results for programmatic use
-  return results;
-};
-
-// Quick voice chat check function
-window.quickVoiceCheck = function() {
-  const issues = [];
-  
-  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-    issues.push('Browser does not support getUserMedia');
-  }
-  
-  if (!window.RTCPeerConnection && !window.webkitRTCPeerConnection) {
-    issues.push('Browser does not support WebRTC');
-  }
-  
-  if (typeof currentVoiceChannelId === 'undefined' || !currentVoiceChannelId) {
-    issues.push('Not currently in a voice channel');
-  }
-  
-  if (!localStream) {
-    issues.push('No local audio stream');
-  }
-  
-  if (issues.length === 0) {
-    console.log('✅ Quick voice check: No issues detected');
-  } else {
-    console.warn('⚠️ Quick voice check issues:', issues);
-  }
-  
-  return issues;
-};
-
-// Test audio playback function
-window.testAudioPlayback = async function() {
-  console.log('🔊 Testing audio playback...');
-  
-  try {
-    // Create a simple test tone
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    oscillator.frequency.value = 440; // A4 note
-    gainNode.gain.value = 0.1; // Low volume
-    
-    oscillator.start();
-    oscillator.stop(audioContext.currentTime + 1); // Play for 1 second
-    
-    console.log('✅ Audio playback test initiated (should hear a 1-second tone)');
-    return true;
-  } catch (err) {
-    console.error('❌ Audio playback test failed:', err);
-    return false;
-  }
-};
-
-// Audio routing and loopback tests
-window.testAudioRouting = async function() {
-  console.log('🔊 Testing audio routing (microphone to speakers)...');
-  
-  try {
-    // Get microphone access
-    const stream = await navigator.mediaDevices.getUserMedia({
-      audio: {
-        echoCancellation: true,
-        noiseSuppression: true,
-        autoGainControl: true,
-        channelCount: 1,
-        sampleRate: 48000
-      },
-      video: false
-    });
-    console.log('✅ Microphone access granted for routing test');
-    
-    // Create audio context for processing
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const source = audioContext.createMediaStreamSource(stream);
-    const analyser = audioContext.createAnalyser();
-    const gainNode = audioContext.createGain();
-    
-    // Set up audio processing chain
-    source.connect(analyser);
-    analyser.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    // Set low volume to avoid feedback
-    gainNode.gain.value = 0.1;
-    
-    // 🔥 CRITICAL: Unmute all voice audio elements so we can hear them
-    document.querySelectorAll('audio[id^="audio-"]').forEach(el => {
-      el.muted = false;
-      el.volume = 0.1; // Keep volume low to prevent feedback
-    });
-    
-    // Set up analyser for level monitoring
-    analyser.fftSize = 256;
-    const dataArray = new Uint8Array(analyser.frequencyBinCount);
-    
-    console.log('🎤 Audio routing active - speak into microphone to test');
-    console.log('⚠️  Low volume set to prevent feedback');
-    
-    // Monitor audio levels
-    let monitoring = true;
-    const checkLevels = () => {
-      if (!monitoring) return;
-      
-      analyser.getByteFrequencyData(dataArray);
-      const average = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
-      
-      if (average > 10) {
-        console.log(`🔊 Audio level detected: ${Math.round(average)}`);
-      }
-      
-      requestAnimationFrame(checkLevels);
-    };
-    
-    checkLevels();
-    
-    // Auto-stop after 10 seconds
-    setTimeout(() => {
-      monitoring = false;
-      gainNode.disconnect();
-      source.disconnect();
-      audioContext.close();
-      stream.getTracks().forEach(track => track.stop());
-      console.log('✅ Audio routing test completed');
-    }, 10000);
-    
-    return { success: true, message: 'Audio routing test active for 10 seconds' };
-    
-  } catch (err) {
-    console.error('❌ Audio routing test failed:', err);
-    return { success: false, error: err.message };
-  }
-};
-
-// Test simulated peer connection audio flow
-window.testPeerAudioFlow = async function() {
-  console.log('🔗 Testing peer connection audio flow simulation...');
-  
-  try {
-    // Create two peer connections to simulate audio flow
-    const peer1 = new RTCPeerConnection({
-      iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
-    });
-    const peer2 = new RTCPeerConnection({
-      iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
-    });
-    
-    // Get microphone stream
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
-    
-    // Add stream to peer1
-    stream.getTracks().forEach(track => peer1.addTrack(track, stream));
-    
-    // Handle incoming tracks on peer2
-    peer2.ontrack = (event) => {
-      console.log('🎵 Received audio track in simulation');
-      
-      // Create audio element to play received audio
-      const audio = new Audio();
-      audio.srcObject = event.streams[0];
-      audio.autoplay = true;
-      audio.volume = 0.3; // Low volume to prevent feedback
-      
-      document.body.appendChild(audio);
-      
-      console.log('🔊 Playing received audio in simulation');
-      
-      // Remove after 5 seconds
-      setTimeout(() => {
-        audio.remove();
-        console.log('✅ Peer audio flow simulation completed');
-      }, 5000);
-    };
-    
-    // Create offer-answer exchange
-    const offer = await peer1.createOffer();
-    await peer1.setLocalDescription(offer);
-    await peer2.setRemoteDescription(offer);
-    
-    const answer = await peer2.createAnswer();
-    await peer2.setLocalDescription(answer);
-    await peer1.setRemoteDescription(answer);
-    
-    console.log('✅ Peer connection simulation established');
-    
-    // Clean up after 10 seconds
-    setTimeout(() => {
-      peer1.close();
-      peer2.close();
-      stream.getTracks().forEach(track => track.stop());
-    }, 10000);
-    
-    return { success: true, message: 'Peer audio flow simulation active' };
-    
-  } catch (err) {
-    console.error('❌ Peer audio flow test failed:', err);
-    return { success: false, error: err.message };
-  }
-};
-
-// Real-time audio level monitoring for voice calls
-window.startAudioLevelMonitoring = function() {
-  console.log('📊 Starting real-time audio level monitoring...');
-  
-  if (!localStream) {
-    console.warn('⚠️ No local audio stream - join voice channel first');
-    return;
-  }
-  
-  try {
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const source = audioContext.createMediaStreamSource(localStream);
-    const analyser = audioContext.createAnalyser();
-    
-    source.connect(analyser);
-    analyser.fftSize = 256;
-    
-    const dataArray = new Uint8Array(analyser.frequencyBinCount);
-    
-    const monitorLevels = () => {
-      if (!localStream) {
-        console.log('📊 Audio level monitoring stopped');
-        return;
-      }
-      
-      analyser.getByteFrequencyData(dataArray);
-      const average = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
-      
-      // Update UI with audio level
-      const level = Math.min(100, Math.round(average * 2));
-      
-      // Check if speaking
-      const isSpeaking = level > 15;
-      
-      // Update speaking indicator
-      const selfParticipant = document.querySelector('.voice-participant.is-self');
-      if (selfParticipant) {
-        const avatar = selfParticipant.querySelector('.voice-participant-avatar');
-        if (isSpeaking) {
-          avatar.classList.add('speaking');
-        } else {
-          avatar.classList.remove('speaking');
-        }
-      }
-      
-      // Log levels periodically
-      if (isSpeaking) {
-        console.log(`🎤 Speaking level: ${level}%`);
-      }
-      
-      requestAnimationFrame(monitorLevels);
-    };
-    
-    monitorLevels();
-    console.log('✅ Audio level monitoring started');
-    
-    return { success: true, message: 'Audio monitoring active' };
-    
-  } catch (err) {
-    console.error('❌ Audio level monitoring failed:', err);
-    return { success: false, error: err.message };
-  }
-};
-
-// Test audio device switching
-window.testAudioDeviceSwitching = async function() {
-  console.log('🔄 Testing audio device switching...');
-  
-  try {
-    // Get all audio devices
-    const devices = await navigator.mediaDevices.enumerateDevices();
-    const audioInputs = devices.filter(d => d.kind === 'audioinput');
-    const audioOutputs = devices.filter(d => d.kind === 'audiooutput');
-    
-    console.log(`🎤 Found ${audioInputs.length} input devices:`);
-    audioInputs.forEach((device, index) => {
-      console.log(`  ${index}: ${device.label || 'Unknown'}`);
-    });
-    
-    console.log(`🔊 Found ${audioOutputs.length} output devices:`);
-    audioOutputs.forEach((device, index) => {
-      console.log(`  ${index}: ${device.label || 'Unknown'}`);
-    });
-    
-    // Test switching between input devices
-    if (audioInputs.length > 1) {
-      console.log('🔄 Testing input device switching...');
-      
-      for (let i = 0; i < Math.min(3, audioInputs.length); i++) {
-        try {
-          const constraints = {
-            audio: {
-              deviceId: audioInputs[i].deviceId
-            }
-          };
-          
-          const stream = await navigator.mediaDevices.getUserMedia(constraints);
-          console.log(`✅ Successfully switched to input device ${i}: ${audioInputs[i].label || 'Unknown'}`);
-          
-          stream.getTracks().forEach(track => track.stop());
-          
-          // Small delay between switches
-          await new Promise(resolve => setTimeout(resolve, 500));
-          
-        } catch (err) {
-          console.warn(`⚠️ Failed to switch to input device ${i}:`, err.message);
-        }
-      }
-    } else {
-      console.log('ℹ️ Only one input device available, skipping switch test');
-    }
-    
-    return { 
-      success: true, 
-      inputDevices: audioInputs.length,
-      outputDevices: audioOutputs.length 
-    };
-    
-  } catch (err) {
-    console.error('❌ Audio device switching test failed:', err);
-    return { success: false, error: err.message };
-  }
-};
-
-// Comprehensive voice chat audio test suite
-window.runVoiceAudioTests = async function() {
-  console.log('🧪 Running comprehensive voice audio tests...');
-  
-  const results = {
-    routing: null,
-    peerFlow: null,
-    deviceSwitching: null,
-    monitoring: null
-  };
-  
-  // Test 1: Audio routing
-  console.log('\n📊 Test 1: Audio Routing');
-  results.routing = await window.testAudioRouting?.();
-  
-  // Wait a bit between tests
-  await new Promise(resolve => setTimeout(resolve, 2000));
-  
-  // Test 2: Peer audio flow
-  console.log('\n📊 Test 2: Peer Audio Flow');
-  results.peerFlow = await window.testPeerAudioFlow?.();
-  
-  // Wait a bit between tests
-  await new Promise(resolve => setTimeout(resolve, 2000));
-  
-  // Test 3: Device switching
-  console.log('\n📊 Test 3: Device Switching');
-  results.deviceSwitching = await window.testAudioDeviceSwitching?.();
-  
-  // Test 4: Start monitoring (if in voice channel)
-  console.log('\n📊 Test 4: Audio Level Monitoring');
-  results.monitoring = window.startAudioLevelMonitoring?.();
-  
-  console.log('\n✅ Voice audio test suite completed!');
-  console.log('Results:', results);
-  
-  return results;
-};
-
-console.log('🔬 Voice chat test functions loaded. Use testVoiceChat(), quickVoiceCheck(), testAudioPlayback(), testAudioRouting(), testPeerAudioFlow(), startAudioLevelMonitoring(), testAudioDeviceSwitching(), or runVoiceAudioTests() in console.');
 
 /**
  * Admin Debug Panel Implementation

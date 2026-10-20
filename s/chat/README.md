@@ -58,18 +58,22 @@ node --env-file=chat/.env chat/dist/server.js
 ## Supabase setup
 
 The chat requires a backend; creating a new Supabase project and starting the
-Node server is not enough. The repository currently contains only the Discord
-integration migration, not a complete first-time schema bootstrap.
+Node server is not enough. The repository does not include a complete first-time
+schema bootstrap.
 [`DB.md`](DB.md) is a schema reference and explicitly is not a migration to
 run. Use a Supabase project that already has the chat's core tables, or create
 and review the complete schema, constraints, policies, and storage setup for
 your project before continuing.
 
 The browser uses Supabase Auth, Postgres, Realtime, and the `avatars` storage
-bucket. Configure the project's sign-in providers, enable the required tables
-for Realtime, create the bucket and its policies, and enable appropriate
-Row-Level Security policies on every exposed table and bucket. Do not disable
-RLS to make the client work.
+bucket. The `20261020184600_enable_chat_realtime.sql` migration configures voice
+participant DELETE events; `20261020185900_enable_realtime_for_all_public_tables.sql`
+adds every existing table in the `public` schema to `supabase_realtime`. Apply
+migrations to the hosted project for this change to take effect. Configure the
+project's sign-in providers, create the bucket and its policies, and enable
+appropriate Row-Level Security policies on every exposed table and bucket.
+Realtime still requires appropriate `SELECT` policies; do not disable RLS to
+make the client work.
 
 To apply the migration included in this repository, run from the repository
 root. `npx` can run the Supabase CLI without adding it to this project's
@@ -83,9 +87,23 @@ npx supabase db push
 ```
 
 `db push` applies tracked migrations, including
-`supabase/migrations/20260822_discord_integration.sql`; that migration expects
-the core chat tables to exist already. Review it and confirm the linked project
-before pushing.
+`supabase/migrations/20260822_discord_integration.sql` and the Realtime
+migrations; the Discord migration expects core chat tables to exist already.
+Review and confirm the linked project before pushing.
+
+## Browser console diagnostics
+
+After the chat scripts load, diagnostics are available as global functions in
+the browser developer console and the built-in SysAdmin console. Run `llaHelp()`
+to list them by feature, or `llaHealthCheck()` for an overview. Examples:
+`llaAuthCheck()`, `llaServerCheck()`, `llaRealtimeVoiceProbe()`,
+`llaMessageFetch()`, `llaPresenceCheck()`, `llaDmCheck()`, and
+`llaVoiceStats()`.
+
+Most helpers only inspect application state or read database rows. The explicit
+voice tests `testAudioPlayback()` and `simulatePerson()` play a short low-volume
+tone; `testAudioRouting()` and `testVoiceChat()` may request microphone access.
+`llaVoiceStopMonitors()` stops the optional live microphone-level monitor.
 
 ### Edge Functions and integrations
 

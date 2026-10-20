@@ -3496,7 +3496,7 @@ async function promote(author) {
 
     const { error: updateError } = await supabaseClient
       .from("server_members")
-      .update({})
+      .update({ role: trimmedRole })
       .eq("server_id", currentServerId)
       .eq("username", author);
 

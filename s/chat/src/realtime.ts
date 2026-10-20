@@ -134,8 +134,9 @@ async function subscribeToCurrentChannel() {
         handleRealtimeMessage(msg, payload.eventType);
       }
     )
-    .subscribe((status) => {
+    .subscribe((status, error) => {
       if (subscriptionGeneration !== messageSubscriptionGeneration) return;
+      if (error) console.error("Message Realtime subscription error:", error);
       console.log(`Realtime status for channel ${currentChannelId}:`, status);
       if (status === "SUBSCRIBED" || status === "CHANNEL_ERROR" || status === "TIMED_OUT" || status === "CLOSED") {
         clearTimeout(subscriptionTimeout);

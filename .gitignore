@@ -9,4 +9,7 @@ s/chat/dist/
 surge.sh
 *.pem
 *.sh
-supabase/
+supabase/*
+!supabase/migrations/
+supabase/migrations/*
+!supabase/migrations/*.sql

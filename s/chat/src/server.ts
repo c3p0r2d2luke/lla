@@ -125,6 +125,7 @@ var _serverMembersLoadPromise = null;
 var _lastServerMembersLoadAt = 0;
 var _lastServerMembersLoadServerId = null;
 var _memberRealtimeServerId = null;
+var _serverMembershipRefreshTimer = null;
 // Remember the last server before entering DM "server" view so we can restore it
 var previousServerIdBeforeDm = null;
 
@@ -336,9 +337,15 @@ function subscribeToServerMemberships() {
     .on(
       "postgres_changes",
       { event: "*", schema: "public", table: "server_members", filter: `username=eq.${username}` },
-      async () => {
-        console.log("🔄 Server membership changed, reloading server list");
-        await loadServers();
+      (payload) => {
+        if (payload.eventType !== "INSERT" && payload.eventType !== "DELETE") return;
+        if (currentSystemRole === "SysAdmin" || currentSystemRole === "SysManager") return;
+        clearTimeout(_serverMembershipRefreshTimer);
+        _serverMembershipRefreshTimer = setTimeout(() => {
+          _serverMembershipRefreshTimer = null;
+          console.log("🔄 Server membership changed, reloading server list");
+          loadServers();
+        }, 200);
       }
     )
     .subscribe();
@@ -409,7 +416,7 @@ async function loadServers() {
 
     // Ensure sysmanagers and sysadmins are added to all servers
     if (isSysAdmin || isSysManager) {
-      await ensureSystemUserInAllServers(isSysAdmin, isSysManager);
+      await ensureSystemUserInAllServers(isSysAdmin, isSysManager, servers);
     }
   } catch (err) {
     console.error("❌ loadServers error:", err);
@@ -1697,7 +1704,7 @@ async function ensureSysAdminInServer(serverId) {
       if (existingMember.role !== "Admin") {
         const { error: updateError } = await supabaseClient
           .from("server_members")
-          .update({})
+          .update({ role: "Admin" })
           .eq("id", existingMember.id);
 
         if (updateError) throw updateError;
@@ -1755,16 +1762,10 @@ async function ensureSysManagerInServer(serverId) {
 }
 
 // Ensure system user is added to all servers
-async function ensureSystemUserInAllServers(isSysAdmin, isSysManager) {
+async function ensureSystemUserInAllServers(isSysAdmin, isSysManager, allServers) {
   if (!username || (!isSysAdmin && !isSysManager)) return;
 
   try {
-    // Get all servers
-    const { data: allServers, error: serversError } = await supabaseClient
-      .from("servers")
-      .select("id, name");
-
-    if (serversError) throw serversError;
     if (!allServers || allServers.length === 0) return;
 
     console.log(`Ensuring system user access to ${allServers.length} servers...`);
