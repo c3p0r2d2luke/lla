@@ -30,6 +30,7 @@
     "typescript": "^7.0.2"
   },
   "dependencies": {
+    "@babel/parser": "^8.0.7",
     "http-proxy": "^1.18.1"
   }
 }
