@@ -30,4 +30,5 @@ configuration. Start with the [chat README](s/chat/README.md) before running
 its server; a fresh clone does not include project credentials or a configured
 backend.
 
-Have fun exploring, learning, and building! ✨
+## AI Usage
+AI was used to make basically the whole chat. AI was used to help setup the blog. This and other READMD.md files were made with assist by AI. Any further production as of (Oct. 28, 2026) will not be used with any AI
