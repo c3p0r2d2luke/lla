@@ -934,8 +934,6 @@ a:focus-visible {
   height: auto !important;
   max-height: 360px;
   border: none !important;
-}
-
   background: transparent;
 }
 
@@ -7096,6 +7094,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   line-height: 1.45;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   word-break: break-word;
