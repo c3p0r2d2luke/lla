@@ -34,7 +34,7 @@
   align-items: center;
   justify-content: center;
   padding: 16px;
-  background: rgba(0, 0, 0, 0.68);
+  background: rgba(0, 0, 0, 0.75);
 }
 
 .app-dialog {
@@ -362,7 +362,6 @@ a:focus-visible {
   border: 1px solid var(--surface-border);
   border-radius: 8px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
-  backdrop-filter: none;
 }
 
 .server-icon {
@@ -412,22 +411,10 @@ a:focus-visible {
   background: var(--bg-secondary);
 }
 
-.auth-backdrop {
-  display: none;
-}
-
-.auth-orb {
-  display: none;
-}
-
-.auth-orb-one {
-  display: none;
-}
-
-.auth-orb-two {
-  display: none;
-}
-
+.auth-backdrop,
+.auth-orb,
+.auth-orb-one,
+.auth-orb-two,
 .auth-grid {
   display: none;
 }
@@ -486,15 +473,15 @@ a:focus-visible {
 #authBox input {
   display: block;
   width: 100%;
-  background: rgba(13, 15, 18, 0.38);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 12px;
+  background: var(--bg-input);
+  border: 1px solid var(--surface-border);
+  border-radius: 8px;
   padding: 12px 14px;
   color: var(--text-main);
   font-size: 14px;
   margin-bottom: 12px;
   outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 
 #signUpAvatar {
@@ -503,8 +490,7 @@ a:focus-visible {
 
 #authBox input:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(88, 101, 242, 0.14);
-  transform: translateY(-1px);
+  box-shadow: 0 0 0 2px rgba(88, 101, 242, 0.2);
 }
 
 #authBox button {
@@ -519,46 +505,31 @@ a:focus-visible {
   font-weight: 600;
   cursor: pointer;
   margin-top: 4px;
-  transition: background 0.15s, box-shadow 0.15s;
+  transition: background 0.15s;
 }
 
 #authBox button:hover {
   background: #4752c4;
-  box-shadow: 0 4px 12px rgba(88, 101, 242, 0.25);
 }
 
 .auth-secondary-btn {
   margin-top: 10px;
   padding: 10px 14px;
-  border-radius: 10px;
-
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--surface-border);
   color: var(--text-main);
-
-  backdrop-filter: blur(6px); /* subtle glass effect */
-
-  transition: 
-    background 0.2s ease,
-    border 0.2s ease,
-    transform 0.1s ease,
-    box-shadow 0.2s ease;
-
+  transition: background 0.2s ease, border 0.2s ease;
   cursor: pointer;
 }
 
 .auth-secondary-btn:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: var(--bg-hover);
   border-color: rgba(255, 255, 255, 0.18);
-
-  transform: translateY(-1px);
-
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
 .auth-secondary-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  background: var(--bg-tertiary);
 }
 
 .auth-oauth-details {
@@ -586,53 +557,48 @@ a:focus-visible {
 
 .auth-provider-btn {
   width: 100%;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.12);
+  background: var(--bg-elevated);
+  border: 1px solid var(--surface-border);
   color: var(--text-main);
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 12px;
   font-size: 15px;
   font-weight: 650;
   cursor: pointer;
   box-shadow: none;
-  transition: transform 0.15s, box-shadow 0.15s, filter 0.15s, background 0.15s, border-color 0.15s;
+  transition: background 0.15s, border-color 0.15s;
 }
 
 .auth-provider-btn:hover {
-  transform: translateY(-1px);
-  background: rgba(255,255,255,0.12);
+  background: var(--bg-hover);
   border-color: rgba(255,255,255,0.16);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.22);
 }
 
 .auth-provider-github {
-  background: rgba(29, 185, 84, 0.14);
-  border-color: rgba(29, 185, 84, 0.22);
+  background: #24292e;
+  border-color: rgba(255,255,255,0.1);
 }
 
 .auth-provider-github:hover {
-  background: rgba(29, 185, 84, 0.18);
-  border-color: rgba(29, 185, 84, 0.28);
+  background: #2f363d;
 }
 
 .auth-provider-discord {
-  background: rgba(88, 101, 242, 0.14);
-  border-color: rgba(88, 101, 242, 0.22);
+  background: #5865f2;
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .auth-provider-discord:hover {
-  background: rgba(88, 101, 242, 0.18);
-  border-color: rgba(88, 101, 242, 0.28);
+  background: #4752c4;
 }
 
 .auth-provider-azure {
-  background: rgba(29, 161, 242, 0.14);
-  border-color: rgba(29, 161, 242, 0.22);
+  background: #0078d4;
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .auth-provider-azure:hover {
-  background: rgba(29, 161, 242, 0.18);
-  border-color: rgba(29, 161, 242, 0.28);
+  background: #0067b8;
 }
 
 .auth-error {
@@ -674,18 +640,9 @@ a:focus-visible {
   position: relative;
 }
 
-.app-backdrop {
-  display: none;
-}
-
-.app-glow {
-  display: none;
-}
-
-.app-glow-left {
-  display: none;
-}
-
+.app-backdrop,
+.app-glow,
+.app-glow-left,
 .app-glow-right {
   display: none;
 }
@@ -727,7 +684,7 @@ a:focus-visible {
   background: var(--bg-tertiary);
   margin-bottom: 8px;
   cursor: pointer;
-  transition: transform 0.2s ease, border-radius 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  transition: border-radius 0.2s ease, background 0.2s ease;
   position: relative;
   display: flex;
   align-items: center;
@@ -743,7 +700,6 @@ a:focus-visible {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.2s;
   pointer-events: none;
 }
 
@@ -753,20 +709,13 @@ a:focus-visible {
 }
 
 .server-icon:hover {
-  transform: translateY(-2px);
   border-radius: 16px;
   background: var(--accent);
-  box-shadow: 0 12px 24px rgba(88, 101, 242, 0.25);
-}
-
-.server-icon:hover img {
-  transform: scale(1.1);
 }
 
 .server-icon.active {
   border-radius: 16px;
   background: var(--accent);
-  box-shadow: 0 0 10px rgba(88, 101, 242, 0.4);
 }
 
 .server-mention-badge {
@@ -903,15 +852,15 @@ a:focus-visible {
   position: relative;
   margin: 0 10px 8px;
   border: 1px solid transparent;
-  border-radius: 12px;
-  transition: background 0.12s ease, border-color 0.12s ease, transform 0.12s ease, box-shadow 0.12s ease;
+  border-radius: 6px;
+  transition: background 0.12s ease;
   align-items: flex-start;
 }
 
 /* AD message styling */
 #messages li.ad-message {
   border-left: 4px solid rgba(255, 215, 0, 0.9);
-  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  background: var(--bg-secondary);
   opacity: 0.95;
 }
 
@@ -919,7 +868,6 @@ a:focus-visible {
 
 #messages li.ad-message .content { color: var(--text-muted); font-style: italic; }
 
-/* Contain third-party ad iframes so they don't position relative to body */
 #messages li.ad-message .ad-content {
   position: relative;
   min-height: 120px;
@@ -938,10 +886,7 @@ a:focus-visible {
 }
 
 #messages li:hover {
-  background: rgba(255,255,255,0.03);
-  border-color: rgba(255,255,255,0.04);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.06);
-  transform: translateY(-1px);
+  background: var(--bg-hover);
 }
 
 /* Message row internals: avatar + body */
@@ -1010,13 +955,13 @@ a:focus-visible {
 
 /* Highlighted / pinned */
 li.highlighted {
-  background: linear-gradient(90deg, rgba(88, 101, 242, 0.22), rgba(88, 101, 242, 0.08)) !important;
+  background: rgba(88, 101, 242, 0.15) !important;
   border-color: rgba(88, 101, 242, 0.28) !important;
 }
 
 li[data-pinned="true"] {
   border-left: 4px solid var(--accent);
-  background: rgba(88, 101, 242, 0.04);
+  background: rgba(88, 101, 242, 0.08);
 }
 
 /* Username */
@@ -1038,11 +983,10 @@ li[data-pinned="true"] {
   color: var(--text-main);
   white-space: pre-wrap;
   word-break: break-word;
-  /* prefer breaking very long tokens to avoid layout blowout */
   overflow-wrap: anywhere;
   max-width: 100%;
   overflow-x: auto;
-  min-width: 0; /* allow this flex child to shrink when needed */
+  min-width: 0;
 }
 
 /* Handle very long messages */
@@ -1052,7 +996,6 @@ li[data-pinned="true"] {
   position: relative;
 }
 
-/* Scrollbar for long messages */
 .content.long-message::-webkit-scrollbar {
   width: 6px;
 }
@@ -1111,27 +1054,23 @@ li[data-pinned="true"] {
   display: flex;
   gap: 8px;
   padding: 12px;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)),
-    var(--bg-tertiary);
+  background: var(--bg-tertiary);
   border-top: 1px solid var(--surface-border);
   flex-shrink: 0;
   position: relative;
-  box-shadow: 0 -10px 28px rgba(0,0,0,0.16);
-  backdrop-filter: blur(14px);
 }
 
 #messageInput {
   flex: 1;
   background: var(--bg-input);
   border: 1px solid var(--surface-border);
-  border-radius: 14px;
+  border-radius: 8px;
   padding: 11px 14px;
   color: var(--text-main);
   font-size: 0.95rem;
   resize: none;
   min-height: 44px;
-  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+  transition: border-color 0.15s;
 }
 
 #messageInput::placeholder {
@@ -1140,8 +1079,7 @@ li[data-pinned="true"] {
 
 #messageInput:focus {
   outline: none;
-  border-color: rgba(88, 101, 242, 0.5);
-  box-shadow: 0 0 0 4px rgba(88, 101, 242, 0.12);
+  border-color: var(--accent);
   background: var(--bg-input);
 }
 
@@ -1150,13 +1088,13 @@ li[data-pinned="true"] {
 }
 
 #uploadBtn {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 12px;
+  background: var(--bg-hover);
+  border: 1px solid var(--surface-border);
+  border-radius: 8px;
   cursor: pointer;
   font-size: 18px;
   padding: 4px 10px;
-  transition: opacity 0.2s, transform 0.15s, background 0.15s, border-color 0.15s;
+  transition: opacity 0.2s, background 0.15s;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1199,7 +1137,7 @@ li[data-pinned="true"] {
   min-width: 42px;
   min-height: 42px;
   border-radius: 50%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)), var(--bg-hover);
+  background: var(--bg-hover);
   color: white;
   display: flex;
   align-items: center;
@@ -1210,11 +1148,9 @@ li[data-pinned="true"] {
   margin-top: 2px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
 
 .avatar-image {
-  /* Use block layout so avatar images stay constrained by their parent container. */
   display: block;
   width: 100%;
   height: 100%;
@@ -1356,8 +1292,6 @@ li[data-pinned="true"] {
   background: var(--bg-hover);
 }
 
-
-
 /* ===============================
    NAME PROMPT
    =============================== */
@@ -1392,22 +1326,19 @@ li[data-pinned="true"] {
 .link-preview {
   display: flex;
   gap: 12px;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)),
-    var(--bg-input);
+  background: var(--bg-input);
   border: 1px solid var(--surface-border);
   border-left: 4px solid var(--accent);
   padding: 12px;
-  border-radius: 14px;
+  border-radius: 8px;
   margin-top: 8px;
   max-width: 520px;
-  box-shadow: 0 12px 28px rgba(0,0,0,0.14);
 }
 
 .link-preview img {
   width: 84px;
   height: 84px;
-  border-radius: 10px;
+  border-radius: 6px;
   object-fit: cover;
 }
 
@@ -1437,9 +1368,6 @@ li[data-pinned="true"] {
    REACTIONS & HOVER CONTROLS
    =============================== */
 
-/* Hide original DM section in the channel sidebar — use the new DM tab/panel instead */
-
-/* Constrain any message-embedded images/videos to avoid oversized/overlapping media */
 .content img, .content video, .gif-embed img, .gif-embed video, .link-preview img {
   max-width: 420px;
   max-height: 60vh;
@@ -1448,8 +1376,6 @@ li[data-pinned="true"] {
   object-fit: contain;
   display: block;
 }
-
-
 
 .reactionBar {
   display: flex;
@@ -1470,7 +1396,7 @@ li[data-pinned="true"] {
   border: 1px solid var(--surface-border);
   color: var(--text-main);
   font-size: 13px;
-  transition: background-color 0.15s, opacity 0.15s, transform 0.15s, border-color 0.15s;
+  transition: background-color 0.15s, border-color 0.15s;
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -1480,7 +1406,6 @@ li[data-pinned="true"] {
 .reactionBubble:hover {
   background-color: var(--bg-hover);
   border-color: var(--accent);
-  transform: translateY(-1px);
 }
 
 .reactionBubble.mine {
@@ -1503,7 +1428,7 @@ li[data-pinned="true"] {
 }
 
 .hoverControls button {
-  background: rgba(47, 49, 54, 0.9);
+  background: var(--bg-elevated);
   border: none;
   color: white;
   cursor: pointer;
@@ -1514,7 +1439,7 @@ li[data-pinned="true"] {
 }
 
 .hoverControls button:hover {
-  background: rgba(64, 68, 75, 0.9);
+  background: var(--bg-hover);
 }
 
 /* ===============================
@@ -1582,9 +1507,7 @@ li[data-pinned="true"] {
   align-items: center;
   justify-content: space-between;
   padding: 10px 16px;
-  background:
-    linear-gradient(90deg, rgba(88, 101, 242, 0.16), rgba(88, 101, 242, 0.03)),
-    var(--bg-secondary);
+  background: var(--bg-secondary);
   border-top: 1px solid var(--surface-border);
   border-bottom: 1px solid var(--surface-border);
   font-size: 0.9rem;
@@ -1663,7 +1586,6 @@ li[data-pinned="true"] {
 .mention .mention-mark,
 .mention .mention-name {
   line-height: inherit;
-  /* allow mention parts to break on very long usernames */
   word-break: break-word;
   overflow-wrap: anywhere;
 }
@@ -1747,7 +1669,7 @@ li[data-pinned="true"] {
   background: var(--bg-tertiary);
 }
 
-/* Little curved hook (Discord vibe) */
+/* Curved connector hook */
 #messages li.is-reply::after {
   content: "";
   position: absolute;
@@ -1793,17 +1715,15 @@ li[data-pinned="true"] {
   display: flex;
   flex-direction: column;
   border-right: 1px solid var(--surface-border);
-  min-height: 0; /* allow flex children to scroll */
+  min-height: 0;
 }
 
-/* Make the channel list take remaining vertical space so the user panel stays at bottom */
 #channelList {
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
 }
 
-/* Keep the user panel pinned to the bottom */
 .user-panel-cluster {
   margin-top: auto;
   padding: 10px;
@@ -1878,20 +1798,18 @@ li[data-pinned="true"] {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  border-radius: 10px;
+  border-radius: 6px;
   padding: 7px 8px;
   cursor: pointer;
   text-align: left;
-  transition: background 0.15s, color 0.15s, transform 0.15s;
+  transition: background 0.15s, color 0.15s;
 }
 
 .dm-item:hover {
   background: var(--bg-hover);
   color: var(--text-main);
-  transform: translateX(2px);
 }
 
-/* Left-side DM avatar */
 .dm-avatar {
   width: 28px;
   height: 28px;
@@ -1912,21 +1830,11 @@ li[data-pinned="true"] {
   display: block;
 }
 
-/* Make sure dm-name sits next to avatar */
 .dm-name { margin-left: 8px; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 .dm-item.active {
-  background: linear-gradient(90deg, rgba(88, 101, 242, 0.22), rgba(88, 101, 242, 0.08));
+  background: var(--bg-hover);
   color: #fff;
-  box-shadow: inset 0 0 0 1px rgba(88, 101, 242, 0.18);
-}
-
-.dm-name {
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .dm-delete-btn {
@@ -1956,23 +1864,21 @@ li[data-pinned="true"] {
 /* CHANNEL ITEM */
 .channel {
   padding: 8px 10px;
-  border-radius: 10px;
+  border-radius: 6px;
   cursor: pointer;
   color: var(--text-muted);
   font-weight: 500;
-  transition: background 0.15s, color 0.15s, transform 0.15s;
+  transition: background 0.15s, color 0.15s;
 }
 
 .channel:hover {
   background: var(--bg-hover);
   color: var(--text-main);
-  transform: translateX(2px);
 }
 
 .channel.active {
-  background: linear-gradient(90deg, rgba(88, 101, 242, 0.22), rgba(88, 101, 242, 0.08));
+  background: var(--bg-elevated);
   color: white;
-  box-shadow: inset 0 0 0 1px rgba(88, 101, 242, 0.18);
 }
 
 /* CHAT HEADER */
@@ -1983,11 +1889,7 @@ li[data-pinned="true"] {
   display: flex;
   align-items: center;
   gap: 10px;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01)),
-    var(--bg-tertiary);
-  box-shadow: 0 10px 28px rgba(0,0,0,0.18);
-  backdrop-filter: blur(14px);
+  background: var(--bg-tertiary);
 }
 
 #currentChannelName {
@@ -2001,18 +1903,16 @@ li[data-pinned="true"] {
   cursor: pointer;
   font-size: 15px;
   padding: 6px 8px;
-  border-radius: 10px;
+  border-radius: 6px;
   color: var(--text-muted);
   flex-shrink: 0;
-  transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.15s;
+  transition: background 0.15s, color 0.15s;
 }
 
 #messageSearchToggle:hover,
 #memberSearchToggle:hover {
   background: rgba(255,255,255,0.08);
   color: var(--text-main);
-  border-color: rgba(255,255,255,0.08);
-  transform: translateY(-1px);
 }
 
 #messageSearchInput,
@@ -2020,7 +1920,7 @@ li[data-pinned="true"] {
   width: 100%;
   background: var(--bg-input);
   border: 1px solid var(--surface-border);
-  border-radius: 12px;
+  border-radius: 6px;
   color: var(--text-main);
   padding: 10px 12px;
   font-size: 12px;
@@ -2039,7 +1939,6 @@ li[data-pinned="true"] {
 #messageSearchInput:focus,
 #memberSearchInput:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 1px rgba(88, 101, 242, 0.25);
 }
 
 .search-empty-state {
@@ -2068,23 +1967,12 @@ li[data-pinned="true"] {
   background: var(--bg-elevated);
 }
 
-/* Hover controls on messages */
-.hoverControls {
-  position: absolute;
-  right: 10px;
-  top: 5px;
-  display: none;
-  flex-direction: row;
-  gap: 4px;
-  z-index: 1000;
-}
-
 #messages li:hover .hoverControls {
   display: flex;
 }
 
 .hoverControls button {
-  background: rgba(47, 49, 54, 0.9);
+  background: var(--bg-elevated);
   border: none;
   color: white;
   cursor: pointer;
@@ -2094,10 +1982,9 @@ li[data-pinned="true"] {
 }
 
 .hoverControls button:hover {
-  background: rgba(64, 68, 75, 0.9);
+  background: var(--bg-hover);
 }
 
-/* CHANNEL ITEM */
 .channel {
   padding: 6px 10px;
   border-radius: 6px;
@@ -2117,7 +2004,6 @@ li[data-pinned="true"] {
   font-weight: 600;
 }
 
-/* Drag and drop states (admin only) */
 .channel.draggable-channel {
   cursor: grab;
 }
@@ -2137,7 +2023,6 @@ li[data-pinned="true"] {
   border: 1px dashed var(--accent);
 }
 
-/* Channel context menu buttons */
 #channelMenu button {
   display: block;
   width: 100%;
@@ -2151,17 +2036,16 @@ li[data-pinned="true"] {
   border-radius: 3px;
 }
 
-/* FORCE RIGHT-CLICK MENU TO BE ON TOP */
 #adminMenu {
   display: none;
   position: fixed;
   background: var(--bg-tertiary);
   border: 1px solid var(--bg-elevated);
   padding: 4px;
-  z-index: 999999 !important; /* SUPER HIGH */
+  z-index: 999999 !important;
   min-width: 200px;
   box-shadow: 0 8px 24px rgba(0,0,0,0.8);
-  pointer-events: auto; /* Ensure it captures clicks */
+  pointer-events: auto;
 }
 
 #adminMenu.mobile-message-sheet {
@@ -2170,7 +2054,7 @@ li[data-pinned="true"] {
   min-width: 0 !important;
   max-height: min(70vh, calc(100vh - 16px)) !important;
   padding: 16px !important;
-  border-radius: 18px !important;
+  border-radius: 12px !important;
   overflow-y: auto;
 }
 
@@ -2199,7 +2083,7 @@ li[data-pinned="true"] {
 .context-menu-dropdown {
   width: 100%;
   min-height: 42px;
-  border-radius: 10px;
+  border-radius: 6px;
   border: 1px solid var(--surface-border);
   background: var(--bg-input);
   color: var(--text-main);
@@ -2211,7 +2095,7 @@ li[data-pinned="true"] {
   width: 100%;
   min-height: 42px;
   border: none;
-  border-radius: 10px;
+  border-radius: 6px;
   background: var(--bg-hover);
   color: var(--text-main);
   font-size: 14px;
@@ -2223,9 +2107,8 @@ li[data-pinned="true"] {
   background: rgba(255, 255, 255, 0.14);
 }
 
-/* Ensure chat messages don't block the menu */
 .chat-app, #messages, .message-content {
-  z-index: 1; /* Lower than menu */
+  z-index: 1;
   position: relative;
 }
 
@@ -2238,7 +2121,7 @@ li[data-pinned="true"] {
   z-index: 99999;
   background: var(--bg-tertiary);
   border: 1px solid var(--bg-elevated);
-  border-radius: 10px;
+  border-radius: 8px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.7);
   width: 320px;
   max-height: 400px;
@@ -2418,10 +2301,6 @@ li[data-pinned="true"] {
   display: none;
 }
 
-/* ===============================
-   INLINE CHANNEL/CATEGORY ROW
-   =============================== */
-
 #newChannelRow {
   display: flex;
   flex-direction: column;
@@ -2470,10 +2349,7 @@ li[data-pinned="true"] {
 #newChannelCancel { color: var(--danger); }
 #newChannelCancel:hover { background: rgba(237,66,69,0.15); }
 
-/* ===============================
-   CATEGORY BLOCKS
-   =============================== */
-
+/* CATEGORY BLOCKS */
 .category-block { margin-bottom: 2px; }
 
 .category-header {
@@ -2517,8 +2393,6 @@ li[data-pinned="true"] {
   transition: opacity 0.15s, color 0.15s, background 0.15s;
   line-height: 1;
   border-radius: 4px;
-  /* Critical for mobile: prevent the browser from intercepting the gesture
-     for scrolling, text-selection, or the iOS callout popup. */
   touch-action: none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -2539,7 +2413,6 @@ li[data-pinned="true"] {
 
 .channel-items { padding-left: 4px; }
 
-/* Ensure the channel row lays out the label + drag handle on the same line */
 .channel {
   display: flex;
   align-items: center;
@@ -2553,7 +2426,6 @@ li[data-pinned="true"] {
   white-space: nowrap;
 }
 
-/* SortableJS drag states */
 .sortable-ghost {
   opacity: 0.35;
   background: var(--accent) !important;
@@ -2561,10 +2433,7 @@ li[data-pinned="true"] {
 }
 .sortable-drag { opacity: 0.9; }
 
-/* ===============================
-   INLINE DELETE BAR
-   =============================== */
-
+/* INLINE DELETE BAR */
 .inline-delete-bar {
   display: flex;
   align-items: center;
@@ -2588,7 +2457,6 @@ li[data-pinned="true"] {
   font-size: 12px;
   font-weight: 600;
 }
-.inline-delete-yes:hover { background: var(--danger); }
 .inline-delete-no {
   background: var(--bg-elevated);
   color: white;
@@ -2598,12 +2466,8 @@ li[data-pinned="true"] {
   cursor: pointer;
   font-size: 12px;
 }
-.inline-delete-no:hover { background: var(--bg-hover); }
 
-/* ===============================
-   LEGACY MENU ITEMS
-   =============================== */
-
+/* LEGACY MENU ITEMS */
 .context-menu-item {
   display: block;
   width: 100%;
@@ -2625,7 +2489,7 @@ li[data-pinned="true"] {
 .mobile-sheet {
   background: var(--bg-secondary) !important;
   border: none !important;
-  border-radius: 16px 16px 0 0 !important;
+  border-radius: 12px 12px 0 0 !important;
   padding: 12px 0 24px 0 !important;
   box-shadow: 0 -8px 32px rgba(0,0,0,0.5) !important;
   animation: slideUp 0.3s cubic-bezier(0, 0, 0.2, 1);
@@ -2665,15 +2529,13 @@ li[data-pinned="true"] {
   100% { background-position: -200% 0; }
 }
 
-/* Better mobile touch targets */
 @media (max-width: 768px) {
   .channel, .member-item, .context-menu-item {
     padding: 12px 16px;
     font-size: 16px;
-    min-height: 44px; /* iOS touch target minimum */
+    min-height: 44px;
   }
 
-  /* Improve mobile message layout */
   #messages li {
     margin: 0 4px 4px;
     padding: 12px 12px;
@@ -2685,15 +2547,10 @@ li[data-pinned="true"] {
     font-size: 12px;
   }
 
-  .username {
+  .username, .content {
     font-size: 0.9rem;
   }
 
-  .content {
-    font-size: 0.9rem;
-  }
-
-  /* Mobile input improvements */
   #controls {
     padding: 8px;
     gap: 6px;
@@ -2702,7 +2559,7 @@ li[data-pinned="true"] {
   #messageInput {
     min-height: 40px;
     padding: 10px 12px;
-    font-size: 16px; /* Prevent zoom on iOS */
+    font-size: 16px;
   }
 
   #uploadBtn {
@@ -2710,7 +2567,6 @@ li[data-pinned="true"] {
     font-size: 16px;
   }
 
-  /* Mobile channel sidebar improvements */
   .channel-sidebar {
     width: 100%;
     max-width: 280px;
@@ -2725,7 +2581,6 @@ li[data-pinned="true"] {
     min-height: 44px;
   }
 
-  /* Mobile server sidebar improvements */
   .server-sidebar {
     width: 60px;
   }
@@ -2735,7 +2590,6 @@ li[data-pinned="true"] {
     height: 40px;
   }
 
-  /* Mobile modal improvements */
   .modal-box {
     margin: 8px;
     padding: 20px 16px;
@@ -2743,7 +2597,6 @@ li[data-pinned="true"] {
     overflow-y: auto;
   }
 
-  /* Mobile voice chat improvements */
   #voiceParticipantGrid {
     margin: 8px;
     padding: 8px;
@@ -2765,7 +2618,6 @@ li[data-pinned="true"] {
     font-size: 12px;
   }
 
-  /* Mobile settings improvements */
   .settings-modal-box {
     margin: 0;
     height: 100vh;
@@ -2773,7 +2625,6 @@ li[data-pinned="true"] {
     border-radius: 0;
   }
 
-  /* Mobile chat header improvements */
   .chat-header {
     padding: 8px 12px;
     min-height: 48px;
@@ -2793,13 +2644,6 @@ li[data-pinned="true"] {
 #controls {
   padding: 10px;
   padding-bottom: max(10px, env(safe-area-inset-bottom));
-}
-
-#controls,
-.chat-header,
-.channel-header,
-.member-list-header {
-  backdrop-filter: blur(10px);
 }
 
 #adminMenu,
@@ -2832,15 +2676,12 @@ li[data-pinned="true"] {
   background: rgba(78, 80, 88, 0.6);
 }
 
-  #messageInput {
-    padding: 12px;
-    border-radius: 20px;
-  }
+#messageInput {
+  padding: 12px;
+  border-radius: 8px;
+}
 
-/* ===============================
-   DISCORD-STYLE IMAGE LIGHTBOX
-   =============================== */
-
+/* IMAGE LIGHTBOX */
 #lightboxOverlay {
   position: fixed;
   inset: 0;
@@ -2863,12 +2704,6 @@ li[data-pinned="true"] {
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: scale(0.88);
-  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-#lightboxOverlay.visible .lightbox-img-wrap {
-  transform: scale(1);
 }
 
 .lightbox-img-wrap img {
@@ -2928,10 +2763,7 @@ li[data-pinned="true"] {
   background: rgba(255,255,255,0.2);
 }
 
-/* ===============================
-   SCROLL-TO-BOTTOM BUTTON
-   =============================== */
-
+/* SCROLL-TO-BOTTOM BUTTON */
 #scrollBottomBtn {
   position: absolute;
   bottom: 84px;
@@ -2939,9 +2771,7 @@ li[data-pinned="true"] {
   width: 42px;
   height: 42px;
   border-radius: 50%;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
-    var(--bg-deepest);
+  background: var(--bg-deepest);
   border: 1px solid var(--surface-border);
   color: var(--text-main);
   cursor: pointer;
@@ -2951,7 +2781,7 @@ li[data-pinned="true"] {
   font-size: 17px;
   box-shadow: 0 12px 30px rgba(0,0,0,0.32);
   z-index: 50;
-  transition: background 0.15s, transform 0.15s, border-color 0.15s;
+  transition: background 0.15s;
 }
 
 #scrollBottomBtn.visible {
@@ -2959,15 +2789,11 @@ li[data-pinned="true"] {
 }
 
 #scrollBottomBtn:hover {
-  background: rgba(255,255,255,0.12);
+  background: var(--bg-hover);
   border-color: rgba(255,255,255,0.14);
-  transform: translateY(-2px);
 }
 
-/* ===============================
-   ANIMATED TYPING DOTS
-   =============================== */
-
+/* ANIMATED TYPING DOTS */
 .typing-dots {
   display: inline-flex;
   align-items: center;
@@ -2993,10 +2819,7 @@ li[data-pinned="true"] {
   30% { transform: translateY(-4px); opacity: 1; }
 }
 
-/* ===============================
-   MESSAGE TIMESTAMP
-   =============================== */
-
+/* MESSAGE TIMESTAMP */
 .msg-timestamp {
   font-size: 0.72rem;
   color: var(--text-muted);
@@ -3012,10 +2835,7 @@ li[data-pinned="true"] {
   opacity: 1;
 }
 
-/* ===============================
-   IMPROVED HOVER CONTROLS
-   =============================== */
-
+/* HOVER CONTROLS */
 .hoverControls {
   position: absolute !important;
   right: 8px !important;
@@ -3024,13 +2844,11 @@ li[data-pinned="true"] {
   flex-direction: row !important;
   gap: 2px !important;
   z-index: 200 !important;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01)) !important;
+  background: var(--bg-elevated) !important;
   border: 1px solid rgba(255,255,255,0.08) !important;
-  border-radius: 10px !important;
+  border-radius: 6px !important;
   padding: 4px !important;
   box-shadow: 0 10px 28px rgba(0,0,0,0.3) !important;
-  backdrop-filter: blur(12px) !important;
 }
 
 #messages li:hover .hoverControls {
@@ -3071,24 +2889,20 @@ li[data-pinned="true"] {
   z-index: 9999;
 }
 
-/* ===============================
-   UPLOADED IMAGE HOVER
-   =============================== */
-
+/* UPLOADED IMAGE HOVER */
 .msg-image {
   cursor: zoom-in;
   max-width: min(340px, 100%);
-  border-radius: 14px;
+  border-radius: 8px;
   display: block;
   margin-top: 6px;
   border: 1px solid rgba(255,255,255,0.08);
   box-shadow: 0 16px 30px rgba(0,0,0,0.18);
-  transition: filter 0.15s, transform 0.15s;
+  transition: filter 0.15s;
 }
 
 .msg-image:hover {
   filter: brightness(0.92);
-  transform: translateY(-1px);
 }
 
 /* Link preview loading animation */
@@ -3120,7 +2934,6 @@ li[data-pinned="true"] {
   display: none;
 }
 
-/* Existing link preview styles */
 .link-preview {
   display: flex;
   gap: 12px;
@@ -3168,23 +2981,17 @@ li[data-pinned="true"] {
   word-break: break-all;
 }
 
-/* ===============================
-   MEMBER LIST PANEL
-   =============================== */
-
+/* MEMBER LIST PANEL */
 .member-list {
   width: 200px;
   flex: 0 0 200px;
   min-width: 200px;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.035), transparent 14%),
-    var(--bg-secondary);
+  background: var(--bg-secondary);
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
   overflow-y: auto;
   border-left: 1px solid var(--surface-border);
-  box-shadow: inset 1px 0 0 rgba(255,255,255,0.02);
 }
 
 .member-list.is-hidden {
@@ -3201,7 +3008,7 @@ li[data-pinned="true"] {
   text-transform: uppercase;
   letter-spacing: 0.6px;
   color: var(--text-muted);
-  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  background: var(--bg-tertiary);
 }
 
 .member-list-header span {
@@ -3222,15 +3029,14 @@ li[data-pinned="true"] {
   align-items: center;
   gap: 8px;
   padding: 7px 10px;
-  border-radius: 10px;
+  border-radius: 6px;
   margin: 1px 4px;
   cursor: pointer;
-  transition: background 0.15s, transform 0.15s;
+  transition: background 0.15s;
 }
 
 .member-item:hover {
   background: var(--bg-hover);
-  transform: translateX(-1px);
 }
 
 body.dm-mode .member-list {
@@ -3334,17 +3140,14 @@ body.dm-mode .member-list {
 }
 
 .modal-box {
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)),
-    var(--bg-modal);
+  background: var(--bg-modal);
   border: 1px solid var(--surface-border);
-  border-radius: 18px;
+  border-radius: 12px;
   padding: 32px 28px 24px;
   width: 100%;
   max-width: 440px;
   position: relative;
   box-shadow: 0 26px 70px rgba(0,0,0,0.45);
-  backdrop-filter: blur(16px);
 }
 
 .modal-box h3 {
@@ -3377,7 +3180,7 @@ body.dm-mode .member-list {
   width: 100%;
   background: var(--bg-input);
   border: 1px solid var(--surface-border);
-  border-radius: 12px;
+  border-radius: 6px;
   padding: 11px 12px;
   color: var(--text-main);
   font-size: 14px;
@@ -3411,26 +3214,24 @@ body.dm-mode .member-list {
 .modal-btn {
   display: block;
   width: 100%;
-  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  background: var(--accent);
   color: white;
   border: none;
-  border-radius: 12px;
+  border-radius: 6px;
   padding: 12px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   margin-top: 12px;
-  transition: transform 0.15s, box-shadow 0.15s, filter 0.15s;
+  transition: background 0.15s;
 }
 
 .modal-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 14px 28px rgba(88, 101, 242, 0.28);
-  filter: brightness(1.04);
+  background: var(--accent-strong);
 }
 
 .modal-btn-secondary {
-  background: rgba(255,255,255,0.06);
+  background: var(--bg-elevated);
   color: var(--text-main);
   border: 1px solid rgba(255,255,255,0.08);
 }
@@ -3490,7 +3291,6 @@ body.dm-mode .member-list {
 
 .modal-btn-copy:hover { background: var(--accent-strong); }
 
-/* Server icon tooltips */
 .server-icon[title]:hover::after {
   content: attr(title);
   position: absolute;
@@ -3513,7 +3313,6 @@ body.dm-mode .member-list {
   position: relative;
 }
 
-/* No-server empty state */
 #noServerScreen {
   flex: 1;
   display: flex;
@@ -3548,10 +3347,7 @@ body.dm-mode .member-list {
   margin-top: 8px;
 }
 
-/* ===============================
-   ROLE FORM CARD
-   =============================== */
-
+/* ROLE FORM CARD */
 .role-form-card {
   background: var(--bg-secondary);
   border: 1px solid rgba(255,255,255,0.08);
@@ -3617,14 +3413,10 @@ body.dm-mode .member-list {
 }
 
 .role-form-btn.applied {
-  background: var(--success, var(--success));
+  background: var(--success);
 }
 
-/* ===============================
-   MOBILE MENU TOGGLE BUTTON
-   (hidden on desktop)
-   =============================== */
-
+/* MOBILE MENU TOGGLE BUTTON */
 #menuToggle {
   display: none;
   background: transparent;
@@ -3642,10 +3434,7 @@ body.dm-mode .member-list {
   background: var(--bg-hover);
 }
 
-/* ===============================
-   MOBILE SIDEBAR OVERLAY
-   =============================== */
-
+/* MOBILE SIDEBAR OVERLAY */
 .sidebar-overlay {
   display: none;
   position: fixed;
@@ -3654,31 +3443,23 @@ body.dm-mode .member-list {
   z-index: 200;
 }
 
-body.sidebar-open .sidebar-overlay {
-  display: block;
-}
+body.sidebar-open .sidebar-overlay,
 body.server-switch-open .sidebar-overlay {
   display: block;
 }
 
-/* On mobile, adjust overlay to not cover the sidebar */
 @media (max-width: 768px) {
   body.sidebar-open .sidebar-overlay {
-    left: 240px; /* Don't cover the channel sidebar */
+    left: 240px;
   }
 
   body.server-switch-open .sidebar-overlay {
-    left: 72px; /* Don't cover the server sidebar */
+    left: 72px;
   }
 }
 
-/* ===============================
-   RESPONSIVE — MOBILE (≤ 768px)
-   =============================== */
-
+/* RESPONSIVE — MOBILE (≤ 768px) */
 @media (max-width: 768px) {
-
-  /* Auth box fills the screen */
   #authGate {
     align-items: flex-start;
     padding: 24px 16px;
@@ -3688,14 +3469,12 @@ body.server-switch-open .sidebar-overlay {
     padding: 28px 20px;
   }
 
-  /* Layout stretches full width */
   .app-layout {
     border-radius: 0;
     max-width: 100%;
     height: 100dvh;
   }
 
-  /* Server sidebar: slide-in so mobile can switch servers */
   .server-sidebar {
     display: flex;
     position: fixed;
@@ -3712,7 +3491,6 @@ body.server-switch-open .sidebar-overlay {
     transform: translateX(0);
   }
 
-  /* Channel sidebar: slide-in next to servers */
   .channel-sidebar {
     position: fixed;
     top: 0;
@@ -3729,20 +3507,17 @@ body.server-switch-open .sidebar-overlay {
     transform: translateX(0);
   }
 
-  /* Chat fills full width */
   .chat-app {
     width: 100%;
     border-left: none;
   }
 
-  /* Show hamburger button */
   #menuToggle {
     display: inline-flex;
     align-items: center;
     justify-content: center;
   }
 
-  /* Show server switch on mobile header */
   #serverSwitchBtn {
     display: inline-flex;
     align-items: center;
@@ -3750,7 +3525,6 @@ body.server-switch-open .sidebar-overlay {
     font-size: 16px;
   }
 
-  /* Chat header — flex row with gap */
   .chat-header {
     display: flex;
     align-items: center;
@@ -3770,17 +3544,14 @@ body.server-switch-open .sidebar-overlay {
     min-width: 0;
   }
 
-  /* Messages — reduce horizontal padding */
   #messages li {
     padding: 6px 10px;
   }
 
-  /* Message image max width */
   .msg-image {
     max-width: 100% !important;
   }
 
-  /* Link preview — stack vertically on very small screens */
   .link-preview {
     flex-direction: column;
     max-width: 100%;
@@ -3791,14 +3562,13 @@ body.server-switch-open .sidebar-overlay {
     height: 140px;
   }
 
-  /* Input bar — larger touch targets */
   #controls {
     padding: 8px;
     gap: 6px;
   }
 
   #messageInput {
-    font-size: 16px; /* prevents iOS zoom on focus */
+    font-size: 16px;
     min-height: 40px;
   }
 
@@ -3807,13 +3577,11 @@ body.server-switch-open .sidebar-overlay {
     padding: 4px 6px;
   }
 
-  /* Hover controls: always visible on mobile (no hover) */
   .hoverControls {
     display: flex;
     opacity: 0.6;
   }
 
-  /* Name prompt */
   #namePrompt {
     display: flex;
     gap: 8px;
@@ -3823,30 +3591,25 @@ body.server-switch-open .sidebar-overlay {
     flex: 1;
   }
 
-  /* Typing indicator padding */
   #typingIndicator {
     padding: 2px 10px;
   }
 
-  /* Emoji picker — larger touch targets */
   #emojiPicker {
     max-width: 95vw;
     overflow-x: auto;
   }
 
-  /* Reply banner */
   #replyBanner {
     padding: 6px 10px;
     font-size: 13px;
   }
 
-  /* Scroll bottom button */
   #scrollBottomBtn {
     right: 12px;
     bottom: 70px;
   }
 
-  /* Member list: hidden on mobile by default */
   .member-list {
     display: none;
   }
@@ -3888,26 +3651,23 @@ body.server-switch-open .sidebar-overlay {
     border-radius: 50%;
   }
 
-  /* Modals: full width on mobile */
   .modal-box {
     margin: 16px;
     padding: 24px 16px 20px;
   }
 
-  /* Member list toggle visible on mobile */
   #memberListToggle {
     display: inline-flex;
     align-items: center;
   }
 }
 
-/* Admin styling */
+/* Role / Member Styling */
 li.admin .username {
   color: var(--danger);
   font-weight: bold;
 }
 
-/* Manager styling */
 li.manager .username {
   color: var(--warning);
 }
@@ -3920,15 +3680,12 @@ li.sysmanager .username {
 li.sysadmin .username {
   color: var(--text-main);
   font-weight: 700;
-  text-shadow: 0 0 8px rgba(255,255,255,0.14);
 }
 
-/* User styling (default) */
 li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   color: var(--text-main);
 }
 
-/* Member avatar containers: ensure fallback centers beneath/above the image and does not sit beside it */
 .member-avatar, .member-avatar * { box-sizing: border-box; }
 .member-avatar {
   position: relative;
@@ -3963,9 +3720,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   font-weight: 700;
   color: var(--text-muted);
 }
-/* fade out fallback when real image is present */
 .has-image .avatar-fallback { opacity: 0; transition: opacity 160ms ease-in-out; }
-
 
 /* SERVER CONTEXT MENU */
 #serverMenu {
@@ -4066,13 +3821,13 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   transition: background-color 0.2s;
 }
 .channel-mention:hover {
-  background-color: var(--accent); /* Discord-like hover color */
+  background-color: var(--accent);
   color: white;
 }
 
-/* --- Profile Modal Specifics --- */
+/* Profile Modal Specifics */
 #profileAvatarContainer:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 #profileAvatarContainer:hover #profileAvatarHint {
   opacity: 1;
@@ -4083,19 +3838,16 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   word-break: break-word;
 }
 
-/* Ensure modal box has no overflow hidden if we want scroll for long bios */
 .modal-box {
   max-height: 90vh;
   overflow-y: auto;
 }
 
-/* Profile Button Styles */
 #profileBtn {
-  transition: transform 0.2s, background 0.2s;
+  transition: background 0.2s;
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
 }
 #profileBtn:hover {
-  transform: scale(1.05);
   background: var(--bg-hover);
 }
 #profileBtn.has-image {
@@ -4113,7 +3865,6 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   z-index: 1;
 }
 
-/* Bio Edit Mode */
 .bio-edit-area {
   width: 100%;
   background: var(--bg-tertiary);
@@ -4171,9 +3922,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
 .profile-modal-header {
   position: relative;
   height: 132px;
-  background:
-    radial-gradient(circle at top right, rgba(255,255,255,0.18), transparent 34%),
-    linear-gradient(135deg, var(--accent), var(--text-link));
+  background: var(--accent);
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -4245,11 +3994,9 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
 }
 
 .profile-about-card {
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015)),
-    var(--bg-tertiary);
+  background: var(--bg-tertiary);
   border: 1px solid var(--surface-border);
-  border-radius: 14px;
+  border-radius: 8px;
   padding: 14px;
   margin-bottom: 16px;
   text-align: left;
@@ -4289,11 +4036,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
 }
 
 .modal-btn-danger {
-  background: linear-gradient(135deg, var(--danger), var(--danger));
-}
-
-.modal-btn-danger:hover {
-  box-shadow: 0 14px 28px rgba(237, 66, 69, 0.26);
+  background: var(--danger);
 }
 
 .server-options-modal-box {
@@ -4313,7 +4056,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   justify-content: space-between;
   gap: 16px;
   padding: 14px 16px;
-  border-radius: 16px;
+  border-radius: 8px;
   border: 1px solid var(--surface-border);
   background: var(--bg-secondary);
 }
@@ -4370,12 +4113,11 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   height: 24px;
   border-radius: 50%;
   background: white;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.22);
   transition: transform 0.18s ease;
 }
 
 .server-option-toggle input:checked + .server-option-slider {
-  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  background: var(--accent);
   border-color: rgba(88, 101, 242, 0.38);
 }
 
@@ -4395,7 +4137,6 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   margin-bottom: 0;
 }
 
-/* Force hide the old inline channel creation row */
 #newChannelRow {
   display: none !important;
   visibility: hidden !important;
@@ -4405,7 +4146,6 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   border: none !important;
 }
 
-/* --- Create Channel Modal Specifics --- */
 #channelIconPreview {
   display: flex;
   align-items: center;
@@ -4425,13 +4165,11 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   object-fit: cover;
 }
 
-/* Ensure modal content doesn't overflow if text is long */
 .modal-box.profile-modal-box {
   max-height: 85vh;
   overflow-y: auto;
 }
 
-/* Style the category select to look like an input */
 #createChannelCategorySelect {
   appearance: none;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23949ba4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
@@ -4442,8 +4180,6 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   cursor: pointer;
 }
 
-/* Mobile: make the drag handle obviously tappable so users don't have to
-   long-press the row (which used to fight with the iOS callout popup). */
 @media (max-width: 768px) {
   .channel .cat-drag-handle,
   .category-header .cat-drag-handle {
@@ -4458,9 +4194,8 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   }
 }
 
-/* FORCE THE MODAL TO BE VISIBLE FOR TESTING */
 #accountLinkModal {
-  z-index: 999999 !important; /* Highest possible layer */
+  z-index: 999999 !important;
   background: rgba(0, 0, 0, 0.8) !important;
   position: fixed !important;
   top: 0;
@@ -4469,12 +4204,12 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   height: 100%;
 }
 
-/* Ensure the modal box itself is visible */
 #accountLinkModal .modal-box {
   display: block !important;
   opacity: 1 !important;
   visibility: visible !important;
 }
+
 /* ======================== /gif PICKER ======================== */
 #controls { position: relative; }
 
@@ -4487,14 +4222,13 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   overflow-y: auto;
   background: var(--bg-secondary);
   border: 1px solid var(--surface-border);
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 10px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   gap: 8px;
   z-index: 50;
   box-shadow: 0 16px 36px rgba(0,0,0,0.45);
-  backdrop-filter: blur(8px);
 }
 
 #gifPicker.hidden { display: none; }
@@ -4524,13 +4258,13 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
 
 #gifPicker .gif-item {
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 6px;
   overflow: hidden;
   position: relative;
   background: rgba(0,0,0,0.35);
   aspect-ratio: 1 / 1;
   border: 2px solid transparent;
-  transition: border-color 0.12s, transform 0.12s;
+  transition: border-color 0.12s;
 }
 
 #gifPicker .gif-item img {
@@ -4541,8 +4275,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
 }
 
 #gifPicker .gif-item:hover {
-  border-color: var(--accent, var(--accent));
-  transform: translateY(-1px);
+  border-color: var(--accent);
 }
 
 #gifPicker .gif-state {
@@ -4564,42 +4297,6 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   }
 }
 
-/* --- MENTION STYLING (DISCORD BLUE) --- */
-.mention {
-  display: inline-block;
-  background: rgba(88, 101, 242, 0.30); /* Discord Blue Background */
-  color: var(--text-main); /* Light Blue Text */
-  border-radius: 4px;
-  padding: 0 4px;
-  margin: 0 1px;
-  font-weight: 500;
-  text-decoration: none;
-  cursor: pointer;
-  unicode-bidi: isolate;
-  transition: background 0.1s ease-out, color 0.1s ease-out;
-}
-
-.mention .mention-mark {
-  font-weight: 700;
-}
-
-.mention:hover {
-  background: var(--accent); /* Solid Blue on Hover */
-  color: #fff;
-}
-
-/* My own mention (Yellow/Orange like Discord) */
-.mention.mine {
-  background: rgba(250, 166, 26, 0.30);
-  color: var(--warning);
-}
-
-.mention.mine:hover {
-  background: var(--warning);
-  color: var(--bg-secondary);
-}
-
-/* --- SLASH COMMAND POPUP STYLING --- */
 .mention-suggestion-item {
   display: flex;
   align-items: center;
@@ -4617,7 +4314,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
 
 .mention-suggestion-item:hover,
 .mention-suggestion-item.active {
-  background: rgba(88, 101, 242, 0.18); /* Blue highlight */
+  background: rgba(88, 101, 242, 0.18);
 }
 
 .mention-suggestion-main {
@@ -4650,7 +4347,6 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   align-items: center;
   width: 80px;
   position: relative;
-  transition: transform 0.2s;
 }
 
 .voice-participant-avatar {
@@ -4659,18 +4355,10 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   border-radius: 50%;
   position: relative;
   overflow: hidden;
-  transition: box-shadow 0.2s;
 }
 
 .voice-participant-avatar.speaking {
-  box-shadow: 0 0 0 4px var(--accent), 0 0 20px var(--accent-strong);
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 4px var(--accent), 0 0 20px var(--accent-strong); }
-  50% { box-shadow: 0 0 0 8px var(--accent), 0 0 30px var(--accent-strong); }
-  100% { box-shadow: 0 0 0 4px var(--accent), 0 0 20px var(--accent-strong); }
+  box-shadow: 0 0 0 4px var(--accent);
 }
 
 .voice-participant-name {
@@ -4685,14 +4373,13 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
 }
 
 /* ===============================
-   VOICE PARTICIPANT GRID (NEW)
+   VOICE PARTICIPANT GRID
    =============================== */
 
 #voiceParticipantGrid {
   flex: 1 1 auto;
   min-height: 0;
-  background: rgba(30, 31, 34, 0.95); /* Dark semi-transparent bg */
-  backdrop-filter: blur(12px);
+  background: var(--bg-secondary);
   padding: 20px;
   gap: 16px;
   flex-wrap: wrap;
@@ -4700,19 +4387,10 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   overflow-y: auto;
   justify-content: center;
   border-top: 1px solid rgba(255,255,255,0.06);
-}
-
-/* Voice Chat Participant Styles */
-#voiceParticipantGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 16px;
-  padding: 16px;
-  background: var(--bg-secondary);
-  border-radius: 12px;
+  border-radius: 8px;
   margin: 16px;
-  min-height: 200px;
-  align-content: start;
 }
 
 .voice-participant {
@@ -4723,8 +4401,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   padding: 16px;
   background: var(--bg-tertiary);
   border: 2px solid transparent;
-  border-radius: 12px;
-  transition: all 0.2s ease;
+  border-radius: 8px;
   position: relative;
 }
 
@@ -4744,13 +4421,11 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   font-weight: 700;
   background: var(--bg-hover);
   color: var(--text-main);
-  transition: all 0.3s ease;
   position: relative;
 }
 
 .voice-participant-avatar.speaking {
-  box-shadow: 0 0 20px rgba(88, 101, 242, 0.6);
-  transform: scale(1.05);
+  box-shadow: 0 0 0 3px var(--accent);
 }
 
 .voice-participant-name {
@@ -4791,11 +4466,13 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
 #voiceControlBar {
   display: none;
   align-items: center;
-  gap: 16px;
-  padding: 16px;
-  background: var(--bg-tertiary);
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--bg-secondary);
   border-top: 1px solid var(--surface-border);
-  border-radius: 0 0 12px 12px;
+  border-bottom: 1px solid var(--surface-border);
+  flex-shrink: 0;
 }
 
 .vc-status {
@@ -4803,6 +4480,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   align-items: center;
   gap: 12px;
   flex: 1;
+  min-width: 0;
 }
 
 .vc-status-dot {
@@ -4810,70 +4488,80 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   height: 12px;
   border-radius: 50%;
   background: var(--success);
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
 }
 
 .vc-status-text {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .vc-status-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-main);
+  font-size: 12px;
+  color: var(--success);
+  font-weight: 700;
+  line-height: 1.1;
 }
 
 .vc-status-channel {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
 }
 
 .vc-controls {
   display: flex;
-  gap: 8px;
+  gap: 6px;
+  flex-shrink: 0;
 }
 
 .vc-control-btn {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  border: 2px solid var(--surface-border);
-  background: var(--bg-secondary);
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--surface-border);
   color: var(--text-main);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 18px;
+  transition: background 0.15s, color 0.15s;
+  font-size: 16px;
 }
 
 .vc-control-btn:hover {
   background: var(--bg-hover);
-  transform: translateY(-2px);
 }
 
-.vc-control-btn:active {
-  transform: translateY(0);
+.vc-control-btn.active {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: #fff;
+}
+
+.vc-control-btn.locked {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: #fff;
+  cursor: not-allowed;
+  opacity: 0.85;
 }
 
 .vc-control-btn.vc-leave {
-  background: var(--danger);
-  border-color: var(--danger);
-  color: white;
+  background: rgba(237,66,69,0.18);
+  border-color: rgba(237,66,69,0.35);
+  color: var(--danger);
 }
 
 .vc-control-btn.vc-leave:hover {
-  background: #ff4757;
+  background: var(--danger);
+  color: #fff;
 }
 
-/* Responsive Grid */
 @media (min-width: 768px) {
   #voiceParticipantGrid {
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -4903,65 +4591,6 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   }
 }
 
-.voice-participant {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 200px;
-  padding: 16px;
-  background: var(--bg-elevated);
-  border: 1px solid var(--surface-border);
-  border-radius: 16px;
-  transition: all 0.2s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.voice-participant:hover {
-  background: var(--bg-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-  border-color: rgba(88, 101, 242, 0.3);
-}
-
-.voice-participant-avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  position: relative;
-  margin-bottom: 12px;
-  transition: box-shadow 0.2s, transform 0.2s;
-  border: 2px solid transparent;
-}
-
-/* Speaking Indicator Pulse */
-.voice-participant-avatar.speaking {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(88, 101, 242, 0.2), 0 0 20px rgba(88, 101, 242, 0.4);
-  animation: pulse-ring 1.5s infinite;
-}
-
-@keyframes pulse-ring {
-  0% { box-shadow: 0 0 0 0px rgba(88, 101, 242, 0.4); }
-  50% { box-shadow: 0 0 0 8px rgba(88, 101, 242, 0); }
-  100% { box-shadow: 0 0 0 0px rgba(88, 101, 242, 0); }
-}
-
-.voice-participant-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-main);
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
-  padding: 0 4px;
-}
-
-/* Optional: Add a "microphone" icon overlay if muted */
 .voice-participant.muted::after {
   content: "🎤🚫";
   position: absolute;
@@ -4972,133 +4601,6 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   padding: 4px;
   border-radius: 50%;
 }
-/* ===============================
-   VOICE CONTROL BAR (Discord-like)
-   =============================== */
-#voiceControlBar {
-  display: none;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 10px 14px;
-  background: var(--bg-secondary);
-  border-top: 1px solid var(--surface-border);
-  border-bottom: 1px solid var(--surface-border);
-  backdrop-filter: blur(14px);
-  flex-shrink: 0;
-}
-.vc-status {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-width: 0;
-  flex: 1;
-}
-.vc-status-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--success);
-  box-shadow: 0 0 0 4px rgba(59,165,93,0.18);
-  flex-shrink: 0;
-}
-.vc-status-text { min-width: 0; }
-.vc-status-title {
-  font-size: 12px;
-  color: var(--success);
-  font-weight: 700;
-  line-height: 1.1;
-}
-.vc-status-channel {
-  font-size: 13px;
-  color: var(--text-muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 200px;
-}
-.vc-controls {
-  display: flex;
-  gap: 6px;
-  flex-shrink: 0;
-}
-.vc-control-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.06);
-  color: var(--text-main);
-  cursor: pointer;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.15s, transform 0.1s, border-color 0.15s, color 0.15s;
-  position: relative;
-}
-.vc-control-btn:hover {
-  background: rgba(255,255,255,0.1);
-  transform: translateY(-1px);
-}
-.vc-control-btn.active {
-  background: var(--danger);
-  border-color: var(--danger);
-  color: #fff;
-}
-.vc-control-btn.active::after {
-  content: "";
-  position: absolute;
-  inset: 4px 50% 4px 50%;
-  width: 2px;
-  background: #fff;
-  transform: rotate(45deg);
-  border-radius: 2px;
-  opacity: 0.85;
-}
-.vc-control-btn.locked {
-  background: var(--danger);
-  border-color: var(--danger);
-  color: #fff;
-  cursor: not-allowed;
-  opacity: 0.85;
-}
-.vc-control-btn.vc-leave {
-  background: rgba(237,66,69,0.18);
-  border-color: rgba(237,66,69,0.35);
-  color: var(--danger);
-}
-.vc-control-btn.vc-leave:hover {
-  background: var(--danger);
-  color: #fff;
-}
-
-/* Participant mute / deafen badges */
-.voice-participant-badges {
-  position: absolute;
-  bottom: 60px;
-  right: 14px;
-  display: flex;
-  gap: 4px;
-}
-.vp-badge {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: rgba(0,0,0,0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  border: 1.5px solid rgba(255,255,255,0.1);
-}
-.vp-badge.danger {
-  background: var(--danger);
-  border-color: rgba(255,255,255,0.2);
-}
-.voice-participant.is-self {
-  border-color: rgba(88, 101, 242, 0.35);
-}
 
 /* Voice participant context menu */
 .vc-context-menu {
@@ -5106,12 +4608,12 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   z-index: 12000;
   background: var(--bg-deepest);
   border: 1px solid var(--surface-border);
-  border-radius: 10px;
+  border-radius: 8px;
   padding: 6px;
   min-width: 180px;
   box-shadow: 0 18px 42px rgba(0,0,0,0.5);
-  backdrop-filter: blur(14px);
 }
+
 .vc-context-menu button {
   display: block;
   width: 100%;
@@ -5120,38 +4622,39 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   border: none;
   color: var(--text-main);
   padding: 8px 10px;
-  border-radius: 6px;
+  border-radius: 4px;
   font-size: 13px;
   cursor: pointer;
 }
+
 .vc-context-menu button:hover {
   background: var(--accent);
   color: #fff;
 }
+
 .vc-context-menu button.danger { color: var(--danger); }
 .vc-context-menu button.danger:hover { background: var(--danger); color: #fff; }
 
 /* ===============================
-   USER SETTINGS MODAL (tabbed)
+   USER SETTINGS MODAL
    =============================== */
 .settings-modal-box {
   position: relative;
   width: 100%;
   max-width: 880px;
   height: min(640px, 86vh);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)),
-    var(--bg-modal);
+  background: var(--bg-modal);
   border: 1px solid var(--surface-border);
-  border-radius: 18px;
+  border-radius: 12px;
   display: flex;
   overflow: hidden;
   box-shadow: 0 28px 80px rgba(0,0,0,0.5);
-  backdrop-filter: blur(16px);
 }
+
 .settings-close {
   z-index: 5;
 }
+
 .settings-sidebar {
   width: 220px;
   background: rgba(0,0,0,0.18);
@@ -5162,6 +4665,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   gap: 4px;
   overflow-y: auto;
 }
+
 .settings-sidebar-title {
   font-size: 11px;
   font-weight: 700;
@@ -5170,54 +4674,65 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   padding: 8px 12px 6px;
   letter-spacing: 0.5px;
 }
+
 .settings-tab {
   text-align: left;
   background: transparent;
   border: none;
   color: var(--text-muted);
   padding: 9px 12px;
-  border-radius: 8px;
+  border-radius: 6px;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
   transition: background 0.12s, color 0.12s;
 }
+
 .settings-tab:hover {
   background: rgba(255,255,255,0.04);
   color: var(--text-main);
 }
+
 .settings-tab.active {
   background: rgba(88, 101, 242, 0.18);
   color: var(--text-main);
 }
+
 .settings-tab-danger {
   color: var(--danger);
   margin-top: auto;
 }
+
 .settings-tab-danger:hover {
   background: rgba(237,66,69,0.18);
   color: #fff;
 }
+
 .settings-sidebar-spacer { flex: 1; }
+
 .settings-content {
   flex: 1;
   padding: 28px 32px;
   overflow-y: auto;
   min-width: 0;
 }
+
 .settings-pane { display: none; }
 .settings-pane.active { display: block; }
+
 .settings-h3 {
   margin: 0 0 18px 0;
   font-size: 20px;
   font-weight: 700;
   color: var(--text-main);
 }
+
 .settings-sub {
   font-size: 13px;
   color: var(--text-muted);
   margin: 0 0 18px 0;
 }
+
 .settings-label {
   display: block;
   font-size: 11px;
@@ -5227,13 +4742,14 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   margin: 14px 0 6px;
   letter-spacing: 0.5px;
 }
+
 .settings-input,
 .settings-textarea {
   display: block;
   width: 100%;
   background: var(--bg-input);
   border: 1px solid var(--surface-border);
-  border-radius: 10px;
+  border-radius: 6px;
   padding: 10px 12px;
   color: var(--text-main);
   font-size: 14px;
@@ -5242,44 +4758,52 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   box-sizing: border-box;
   resize: vertical;
 }
+
 .settings-input:focus,
 .settings-textarea:focus { border-color: var(--accent); }
+
 .settings-actions-row {
   display: flex;
   align-items: center;
   gap: 12px;
   margin-top: 16px;
 }
+
 .settings-btn {
-  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  background: var(--accent);
   color: #fff;
   border: none;
-  border-radius: 10px;
+  border-radius: 6px;
   padding: 10px 18px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: filter 0.15s, transform 0.1s;
+  transition: background 0.15s;
 }
-.settings-btn:hover { filter: brightness(1.06); transform: translateY(-1px); }
+
+.settings-btn:hover { background: var(--accent-strong); }
+
 .settings-msg {
   font-size: 13px;
   color: var(--success);
   min-height: 18px;
 }
+
 .settings-msg.error { color: var(--danger); }
 
 /* Account card */
 .settings-account-card {
   background: var(--bg-secondary);
-  border-radius: 14px;
+  border-radius: 8px;
   border: 1px solid var(--surface-border);
   overflow: hidden;
 }
+
 .settings-account-banner {
   height: 80px;
-  background: linear-gradient(135deg, var(--accent), var(--text-link));
+  background: var(--accent);
 }
+
 .settings-account-body {
   padding: 0 18px 16px;
   display: flex;
@@ -5287,6 +4811,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   gap: 14px;
   margin-top: -36px;
 }
+
 .settings-avatar-container {
   width: 84px;
   height: 84px;
@@ -5301,6 +4826,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   overflow: hidden;
   flex-shrink: 0;
 }
+
 .settings-avatar-fallback {
   font-size: 28px;
   font-weight: 700;
@@ -5310,14 +4836,16 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--accent), var(--text-link));
+  background: var(--accent);
 }
+
 .settings-avatar-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
+
 .settings-avatar-hint {
   position: absolute;
   inset: 0;
@@ -5332,8 +4860,11 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   transition: opacity 0.15s;
   text-transform: uppercase;
 }
+
 .settings-avatar-container:hover .settings-avatar-hint { opacity: 1; }
+
 .settings-account-meta { flex: 1; min-width: 0; padding-top: 36px; }
+
 .settings-display-name {
   font-size: 17px;
   font-weight: 700;
@@ -5342,28 +4873,32 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .settings-username {
   font-size: 13px;
   color: var(--text-muted);
 }
+
 .settings-inline-btn {
   background: var(--accent);
   color: #fff;
   border: none;
   padding: 8px 14px;
-  border-radius: 8px;
+  border-radius: 6px;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   align-self: center;
   margin-top: 36px;
 }
+
 .settings-inline-btn.small {
   padding: 6px 10px;
   font-size: 12px;
   margin-top: 0;
 }
-.settings-inline-btn:hover { filter: brightness(1.08); }
+
+.settings-inline-btn:hover { background: var(--accent-strong); }
 
 .settings-account-fields {
   padding: 14px 18px 18px;
@@ -5371,14 +4906,16 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   flex-direction: column;
   gap: 10px;
 }
+
 .settings-field {
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 10px 12px;
   background: rgba(255,255,255,0.03);
-  border-radius: 8px;
+  border-radius: 6px;
 }
+
 .settings-field-label {
   font-size: 11px;
   font-weight: 700;
@@ -5388,6 +4925,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   flex-shrink: 0;
   letter-spacing: 0.5px;
 }
+
 .settings-field-value {
   flex: 1;
   font-size: 14px;
@@ -5406,28 +4944,34 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   padding: 14px 0;
   border-bottom: 1px solid rgba(255,255,255,0.04);
 }
+
 .settings-toggle-row:last-of-type { border-bottom: none; }
+
 .settings-toggle-title {
   font-size: 14px;
   font-weight: 600;
   color: var(--text-main);
 }
+
 .settings-toggle-sub {
   font-size: 12px;
   color: var(--text-muted);
   margin-top: 2px;
 }
+
 .settings-switch {
   position: relative;
   width: 42px;
   height: 24px;
   flex-shrink: 0;
 }
+
 .settings-switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
+
 .settings-slider {
   position: absolute;
   inset: 0;
@@ -5436,6 +4980,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   transition: background 0.15s;
   cursor: pointer;
 }
+
 .settings-slider::before {
   content: "";
   position: absolute;
@@ -5447,12 +4992,15 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   border-radius: 50%;
   transition: transform 0.15s;
 }
+
 .settings-switch input:checked + .settings-slider {
   background: var(--success);
 }
+
 .settings-switch input:checked + .settings-slider::before {
   transform: translateX(18px);
 }
+
 .settings-switch input:disabled + .settings-slider { opacity: 0.5; cursor: not-allowed; }
 
 /* Theme list */
@@ -5462,62 +5010,45 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   gap: 12px;
   margin-top: 10px;
 }
+
 .settings-theme-card {
   background: rgba(0,0,0,0.25);
   border: 2px solid transparent;
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 12px;
   cursor: pointer;
-  transition: transform 0.1s, border-color 0.15s;
+  transition: border-color 0.15s;
+  position: relative;
+  overflow: hidden;
 }
-.settings-theme-card:hover { transform: translateY(-2px); }
+
 .settings-theme-card.selected { border-color: var(--accent); }
+
 .settings-theme-preview {
   height: 60px;
-  border-radius: 8px;
+  border-radius: 6px;
   margin-bottom: 8px;
-  background: linear-gradient(135deg, var(--p1, var(--accent)), var(--p2, var(--text-link)));
+  background: var(--bg-tertiary);
   border: 1px solid rgba(255,255,255,0.06);
 }
+
 .settings-theme-name {
   font-size: 13px;
   font-weight: 600;
   color: var(--text-main);
 }
+
 .settings-theme-loading {
   color: var(--text-muted);
   font-size: 13px;
   padding: 12px;
 }
 
-/* Enhanced theme card styles */
-.settings-theme-card {
-  position: relative;
-  overflow: hidden;
-}
-.settings-theme-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, transparent, rgba(255,255,255,0.05));
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-.settings-theme-card:hover::before {
-  opacity: 1;
-}
-.settings-theme-card.selected::before {
-  background: linear-gradient(135deg, transparent, rgba(88, 101, 242, 0.1));
-  opacity: 1;
-}
-
 .settings-range {
   width: 100%;
   accent-color: var(--accent);
 }
+
 .settings-range-value {
   text-align: right;
   font-size: 12px;
@@ -5530,20 +5061,21 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   flex-direction: column;
   gap: 10px;
 }
+
 .settings-link-btn {
   color: #fff;
   border: none;
   padding: 12px;
-  border-radius: 10px;
+  border-radius: 8px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   text-align: left;
-  transition: filter 0.15s, transform 0.1s;
+  transition: background 0.15s;
 }
-.settings-link-btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
 
-/* Mobile settings modal */
+.settings-link-btn:hover { background: var(--bg-hover); }
+
 @media (max-width: 720px) {
   .settings-modal-box {
     flex-direction: column;
@@ -5566,9 +5098,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   .settings-content { padding: 18px; }
 }
 
-/* ===============================
-   USER PANEL CLUSTER (avatar + mic + gear)
-   =============================== */
+/* USER PANEL CLUSTER */
 .user-panel-cluster {
   display: flex;
   align-items: center;
@@ -5592,8 +5122,9 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   justify-content: center;
   flex-shrink: 0;
   padding: 0;
-  transition: filter 0.12s, transform 0.1s;
+  transition: background 0.12s;
 }
+
 #profileBtn .avatar-image,
 #profileBtn .avatar-fallback {
   width: 100%;
@@ -5604,7 +5135,8 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   align-items: center;
   justify-content: center;
 }
-#profileBtn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+
+#profileBtn:hover { background: var(--bg-hover); }
 
 .user-panel-icon {
   width: 34px;
@@ -5619,21 +5151,20 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   justify-content: center;
   cursor: pointer;
   flex-shrink: 0;
-  transition: background 0.12s, transform 0.1s;
+  transition: background 0.12s;
   padding: 0;
   line-height: 1;
 }
-.user-panel-icon:hover { background: rgba(255,255,255,0.10); transform: translateY(-1px); }
-.user-panel-icon:active { transform: translateY(0); }
+
+.user-panel-icon:hover { background: rgba(255,255,255,0.10); }
+
 #selfMuteBtn.active {
   background: rgba(237, 66, 69, 0.22);
   color: var(--danger);
   box-shadow: inset 0 0 0 1px rgba(237,66,69,0.45);
 }
 
-/* ===============================
-   PRESENCE DOT (status indicator)
-   =============================== */
+/* PRESENCE DOT */
 .presence-dot {
   position: absolute;
   bottom: -1px;
@@ -5650,7 +5181,6 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
 .presence-dot[data-status="dnd"]       { background: var(--danger); }
 .presence-dot[data-status="invisible"] { background: var(--text-muted); }
 
-/* When the dot is rendered inside a status option (not on the avatar) */
 .status-option .presence-dot {
   position: static;
   width: 14px;
@@ -5658,15 +5188,14 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   border-color: transparent;
 }
 
-/* ===============================
-   STATUS PICKER GRID
-   =============================== */
+/* STATUS PICKER GRID */
 .status-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 10px;
   margin-top: 8px;
 }
+
 .status-option {
   display: flex;
   align-items: center;
@@ -5674,41 +5203,46 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   padding: 14px 16px;
   background: rgba(0,0,0,0.22);
   border: 2px solid transparent;
-  border-radius: 12px;
+  border-radius: 8px;
   text-align: left;
   cursor: pointer;
   color: var(--text-main);
-  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+  transition: border-color 0.15s, background 0.15s;
 }
-.status-option:hover { background: rgba(255,255,255,0.06); transform: translateY(-1px); }
+
+.status-option:hover { background: rgba(255,255,255,0.06); }
+
 .status-option.active {
   border-color: var(--accent);
   background: rgba(88, 101, 242, 0.16);
 }
+
 .status-option-title {
   font-size: 14px;
   font-weight: 600;
   color: var(--text-main);
 }
+
 .status-option-sub {
   font-size: 12px;
   color: var(--text-muted);
   margin-top: 2px;
 }
 
-/* ====== CHANNEL PERMISSIONS MODAL ====== */
+/* CHANNEL PERMISSIONS MODAL */
 .channel-perms-card {
   width: 720px;
   max-width: 95vw;
   max-height: 85vh;
-  background: var(--bg-tertiary, var(--bg-tertiary));
-  color: var(--text-main, var(--text-main));
+  background: var(--bg-tertiary);
+  color: var(--text-main);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   box-shadow: 0 12px 48px rgba(0,0,0,0.6);
 }
+
 .channel-perms-header {
   display: flex;
   align-items: flex-start;
@@ -5716,67 +5250,78 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   padding: 18px 22px 12px;
   border-bottom: 1px solid rgba(255,255,255,0.06);
 }
+
 .channel-perms-eyebrow {
   font-size: 11px;
   font-weight: 700;
-  color: var(--text-muted, var(--text-muted));
+  color: var(--text-muted);
   letter-spacing: 0.06em;
 }
+
 .channel-perms-title {
   font-size: 18px;
   font-weight: 700;
   margin-top: 4px;
-  color: var(--text-main, #fff);
+  color: #fff;
 }
+
 .channel-perms-body {
   flex: 1;
   overflow-y: auto;
   padding: 14px 22px 4px;
 }
+
 .channel-perms-tabs {
   display: flex;
   gap: 4px;
   border-bottom: 1px solid rgba(255,255,255,0.08);
   margin-bottom: 14px;
 }
+
 .cp-tab {
   background: transparent;
   border: none;
-  color: var(--text-muted, var(--text-muted));
+  color: var(--text-muted);
   padding: 10px 14px;
   font-weight: 600;
   cursor: pointer;
   border-bottom: 2px solid transparent;
   font-size: 14px;
 }
-.cp-tab:hover { color: var(--text-main, #fff); }
+
+.cp-tab:hover { color: #fff; }
+
 .cp-tab.active {
-  color: var(--text-main, #fff);
-  border-bottom-color: var(--accent, var(--accent));
+  color: #fff;
+  border-bottom-color: var(--accent);
 }
+
 .cp-helper {
   font-size: 13px;
-  color: var(--text-muted, var(--text-muted));
+  color: var(--text-muted);
   margin-bottom: 12px;
   line-height: 1.45;
 }
+
 .cp-add-row {
   display: flex;
   gap: 8px;
   margin-bottom: 14px;
 }
+
 .cp-add-row select {
   flex: 1;
-  background: var(--bg-secondary, var(--bg-secondary));
-  color: var(--text-main, var(--text-main));
+  background: var(--bg-secondary);
+  color: var(--text-main);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 6px;
   padding: 8px 10px;
   font-size: 14px;
   cursor: pointer;
 }
+
 .btn-add-override {
-  background: var(--accent, var(--accent));
+  background: var(--accent);
   color: white;
   border: none;
   padding: 0 16px;
@@ -5784,23 +5329,25 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   font-weight: 600;
   cursor: pointer;
 }
-.btn-add-override:hover { filter: brightness(1.08); }
+
 .cp-list {
   display: flex;
   flex-direction: column;
   gap: 8px;
   padding-bottom: 8px;
 }
+
 .cp-row {
   display: grid;
   grid-template-columns: 1fr auto auto auto auto;
   align-items: center;
   gap: 10px;
-  background: var(--bg-secondary, var(--bg-secondary));
+  background: var(--bg-secondary);
   border: 1px solid rgba(255,255,255,0.05);
   padding: 10px 12px;
   border-radius: 8px;
 }
+
 .cp-row-label {
   display: flex;
   align-items: center;
@@ -5809,6 +5356,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   font-size: 14px;
   min-width: 0;
 }
+
 .cp-role-dot {
   width: 12px;
   height: 12px;
@@ -5816,11 +5364,13 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   flex-shrink: 0;
   background: var(--text-muted);
 }
+
 .cp-row-label .cp-name {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .cp-perm-control {
   display: flex;
   flex-direction: column;
@@ -5828,59 +5378,68 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   gap: 3px;
   min-width: 76px;
 }
+
 .cp-perm-control label {
   font-size: 10px;
-  color: var(--text-muted, var(--text-muted));
+  color: var(--text-muted);
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
+
 .cp-tri-state {
   display: inline-flex;
-  background: var(--bg-tertiary, var(--bg-main));
+  background: var(--bg-main);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 6px;
   overflow: hidden;
 }
+
 .cp-tri-state button {
   background: transparent;
   border: none;
-  color: var(--text-muted, var(--text-muted));
+  color: var(--text-muted);
   width: 26px;
   height: 26px;
   font-size: 14px;
   cursor: pointer;
   font-weight: 700;
 }
-.cp-tri-state button:hover { background: rgba(255,255,255,0.06); color: var(--text-main, #fff); }
+
+.cp-tri-state button:hover { background: rgba(255,255,255,0.06); color: #fff; }
 .cp-tri-state button.cp-allow.active { background: rgba(59, 165, 93, 0.22); color: var(--success); }
 .cp-tri-state button.cp-deny.active  { background: rgba(237, 66, 69, 0.22); color: var(--danger); }
-.cp-tri-state button.cp-default.active { background: rgba(116, 127, 141, 0.22); color: var(--text-main, #fff); }
+.cp-tri-state button.cp-default.active { background: rgba(116, 127, 141, 0.22); color: #fff; }
+
 .cp-row-remove {
   background: transparent;
   border: none;
-  color: var(--text-muted, var(--text-muted));
+  color: var(--text-muted);
   cursor: pointer;
   font-size: 18px;
   padding: 4px 6px;
   border-radius: 4px;
 }
+
 .cp-row-remove:hover { background: rgba(237, 66, 69, 0.18); color: var(--danger); }
+
 .cp-empty {
   text-align: center;
-  color: var(--text-muted, var(--text-muted));
+  color: var(--text-muted);
   font-size: 13px;
   padding: 18px 0;
   font-style: italic;
 }
+
 .channel-perms-footer {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
   padding: 12px 22px;
-  background: var(--bg-secondary, var(--bg-secondary));
+  background: var(--bg-secondary);
   border-top: 1px solid rgba(255,255,255,0.06);
 }
+
 .btn-cp-cancel,
 .btn-cp-save {
   border: none;
@@ -5890,22 +5449,25 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   cursor: pointer;
   font-size: 14px;
 }
+
 .btn-cp-cancel {
   background: transparent;
-  color: var(--text-main, #fff);
+  color: #fff;
 }
+
 .btn-cp-cancel:hover { text-decoration: underline; }
+
 .btn-cp-save {
-  background: var(--accent, var(--accent));
+  background: var(--accent);
   color: white;
 }
-.btn-cp-save:hover { filter: brightness(1.08); }
+
 .btn-cp-save:disabled { opacity: 0.6; cursor: not-allowed; }
 
-/* Hidden channel (no can_view) — only shown to admins as faded */
 .channel.cp-hidden-but-admin {
   opacity: 0.45;
 }
+
 .channel.cp-hidden-but-admin::after {
   content: " 🔒";
   font-size: 11px;
@@ -5913,9 +5475,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   color: var(--text-muted);
 }
 
-/* ===============================
-   PROFILE MODAL — Server role badge
-   =============================== */
+/* PROFILE SERVER ROLE BADGE */
 .profile-server-role {
   display: flex;
   align-items: center;
@@ -5926,12 +5486,14 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   border: 1px solid var(--surface-border);
   border-radius: 8px;
 }
+
 .profile-server-role-label {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.06em;
   color: var(--text-muted);
 }
+
 .profile-server-role-badge {
   display: inline-flex;
   align-items: center;
@@ -5943,30 +5505,27 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   color: #fff;
   text-transform: capitalize;
 }
+
 .profile-server-role-badge.role-admin    { background: var(--danger); }
 .profile-server-role-badge.role-manager  { background: var(--success); }
 .profile-server-role-badge.role-sysmanager { background: var(--accent); }
 .profile-server-role-badge.role-sysadmin { background: var(--bg-deepest); border: 1px solid rgba(255,255,255,0.18); }
 .profile-server-role-badge.role-user     { background: var(--bg-elevated); color: var(--text-main); }
 
-/* ===============================
-   SETTINGS — Sidebar divider, Danger Zone tab visual
-   =============================== */
 .settings-sidebar-divider {
   height: 1px;
   margin: 6px 8px;
   background: var(--surface-border);
 }
 
-/* ===============================
-   SETTINGS — Connections cards (Discord-style)
-   =============================== */
+/* CONNECTIONS CARDS */
 .connections-card-list {
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin-top: 8px;
 }
+
 .connection-card {
   display: flex;
   align-items: center;
@@ -5974,12 +5533,14 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   padding: 14px 16px;
   background: var(--bg-tertiary);
   border: 1px solid var(--surface-border);
-  border-radius: 10px;
+  border-radius: 8px;
   transition: background 0.15s, border-color 0.15s;
 }
+
 .connection-card.is-linked {
   border-color: rgba(59,165,93,0.35);
 }
+
 .connection-card-icon {
   width: 40px;
   height: 40px;
@@ -5994,16 +5555,19 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   letter-spacing: 0.02em;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
+
 .connection-card-body {
   flex: 1;
   min-width: 0;
 }
+
 .connection-card-name {
   font-size: 14px;
   font-weight: 700;
   color: var(--text-main);
   line-height: 1.2;
 }
+
 .connection-card-handle {
   font-size: 13px;
   color: var(--text-muted);
@@ -6012,6 +5576,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .connection-card-btn {
   flex-shrink: 0;
   padding: 7px 14px;
@@ -6020,37 +5585,39 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: filter 0.15s, transform 0.05s;
 }
-.connection-card-btn:hover { filter: brightness(1.08); }
-.connection-card-btn:active { transform: translateY(1px); }
+
 .connection-card-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
 .connection-card-btn.connect {
   background: var(--accent);
   color: #fff;
 }
+
 .connection-card-btn.disconnect {
   background: transparent;
   color: var(--text-main);
   border: 1px solid var(--surface-border);
 }
+
 .connection-card-btn.disconnect:hover {
   background: var(--danger);
   border-color: var(--danger);
   color: #fff;
 }
+
 .connections-loading {
   padding: 14px;
   color: var(--text-muted);
   text-align: center;
   font-size: 13px;
 }
+
 .connections-loading.error { color: var(--danger); }
 
-/* ===============================
-   SETTINGS — Danger Zone pane
-   =============================== */
+/* DANGER ZONE */
 .settings-h3.danger-h3 { color: var(--danger); }
+
 .danger-card {
   display: flex;
   align-items: center;
@@ -6058,21 +5625,25 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   padding: 18px 20px;
   background: var(--bg-tertiary);
   border: 1px solid rgba(237,66,69,0.35);
-  border-radius: 10px;
+  border-radius: 8px;
   margin-top: 10px;
 }
+
 .danger-card-body { flex: 1; min-width: 0; }
+
 .danger-card-title {
   font-size: 15px;
   font-weight: 700;
   color: var(--text-main);
 }
+
 .danger-card-sub {
   font-size: 13px;
   color: var(--text-muted);
   margin-top: 4px;
   line-height: 1.45;
 }
+
 .danger-btn {
   flex-shrink: 0;
   padding: 9px 18px;
@@ -6083,14 +5654,10 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: filter 0.15s;
 }
-.danger-btn:hover { filter: brightness(1.08); }
+
 .danger-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-/* ===============================
-   VC — admin-locked override (server muted/deafened)
-   =============================== */
 .vc-control-btn.admin-locked {
   background: var(--danger);
   border-color: var(--danger);
@@ -6098,6 +5665,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   cursor: not-allowed;
   opacity: 0.85;
 }
+
 .vc-control-btn.admin-locked::after { display: none; }
 
 @media (max-width: 700px) {
@@ -6106,180 +5674,199 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   .connection-card-btn { margin-left: auto; }
 }
 
+/* SERVER ROLES MODAL */
+.server-roles-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0 4px;
+}
 
-  /* ===============================
-     SERVER ROLES MODAL
-     =============================== */
-  .server-roles-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    padding: 8px 0 4px;
-  }
-  .server-roles-modal-box {
-    width: min(820px, 95vw);
-    max-width: min(820px, 95vw);
-    max-height: 88vh;
-    display: flex;
-    flex-direction: column;
-    padding: 28px 28px 22px;
-  }
-  .server-roles-layout {
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    gap: 16px;
-    margin-top: 12px;
-    min-height: 420px;
-  }
+.server-roles-modal-box {
+  width: min(820px, 95vw);
+  max-width: min(820px, 95vw);
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 28px 22px;
+}
+
+.server-roles-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 16px;
+  margin-top: 12px;
+  min-height: 420px;
+}
+
+.server-roles-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-right: 1px solid var(--surface-border);
+  padding-right: 12px;
+  min-width: 0;
+}
+
+.server-roles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-y: auto;
+  max-height: 60vh;
+  padding-right: 4px;
+}
+
+.server-roles-empty {
+  color: var(--text-muted);
+  font-size: 12px;
+  padding: 8px 6px;
+}
+
+.server-role-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-main);
+  font-size: 14px;
+  transition: background 0.12s;
+  user-select: none;
+}
+
+.server-role-row:hover { background: var(--bg-hover); }
+
+.server-role-row.selected {
+  background: var(--bg-hover);
+  border-color: var(--accent);
+}
+
+.server-role-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex: 0 0 auto;
+  border: 1px solid var(--surface-border);
+}
+
+.server-role-row-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.server-roles-editor {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow-y: auto;
+  max-height: 70vh;
+  padding-right: 4px;
+}
+
+.server-role-color-input {
+  width: 60px;
+  height: 36px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.server-role-permissions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border: 1px solid var(--surface-border);
+  border-radius: 8px;
+  padding: 10px;
+  background: var(--bg-secondary);
+}
+
+.server-role-permission-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 4px;
+  border-bottom: 1px solid var(--surface-border);
+}
+
+.server-role-permission-row:last-child { border-bottom: none; }
+
+.server-role-permission-info {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.server-role-permission-title {
+  display: block;
+  color: var(--text-main);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.server-role-permission-desc {
+  display: block;
+  color: var(--text-muted);
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.server-role-permission-toggle {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  flex: 0 0 auto;
+}
+
+.server-role-permission-toggle input {
+  appearance: none;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-elevated);
+  border-radius: 999px;
+  cursor: pointer;
+  margin: 0;
+  position: relative;
+  transition: background 0.15s;
+}
+
+.server-role-permission-toggle input::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  top: 3px;
+  left: 3px;
+  transition: left 0.15s;
+}
+
+.server-role-permission-toggle input:checked { background: var(--success); }
+.server-role-permission-toggle input:checked::after { left: 19px; }
+
+.modal-btn-danger {
+  background: var(--danger) !important;
+  color: #fff;
+}
+
+@media (max-width: 700px) {
+  .server-roles-layout { grid-template-columns: 1fr; }
   .server-roles-sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    border-right: 1px solid var(--surface-border);
-    padding-right: 12px;
-    min-width: 0;
-  }
-  .server-roles-list {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    overflow-y: auto;
-    max-height: 60vh;
-    padding-right: 4px;
-  }
-  .server-roles-empty {
-    color: var(--text-muted);
-    font-size: 12px;
-    padding: 8px 6px;
-  }
-  .server-role-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    background: transparent;
-    border: 1px solid transparent;
-    color: var(--text-main);
-    font-size: 14px;
-    transition: background 0.12s, border-color 0.12s;
-    user-select: none;
-  }
-  .server-role-row:hover { background: var(--bg-hover); }
-  .server-role-row.selected {
-    background: var(--bg-hover);
-    border-color: var(--accent);
-  }
-  .server-role-swatch {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: var(--accent);
-    flex: 0 0 auto;
-    border: 1px solid var(--surface-border);
-  }
-  .server-role-row-name {
-    flex: 1 1 auto;
-    min-width: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .server-roles-editor {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    overflow-y: auto;
-    max-height: 70vh;
-    padding-right: 4px;
-  }
-  .server-role-color-input {
-    width: 60px;
-    height: 36px;
-    padding: 2px;
-    cursor: pointer;
-  }
-  .server-role-permissions-list {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    border: 1px solid var(--surface-border);
-    border-radius: 8px;
-    padding: 10px;
-    background: var(--bg-secondary);
-  }
-  .server-role-permission-row {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 8px 4px;
+    border-right: none;
     border-bottom: 1px solid var(--surface-border);
+    padding-right: 0;
+    padding-bottom: 8px;
   }
-  .server-role-permission-row:last-child { border-bottom: none; }
-  .server-role-permission-info {
-    flex: 1 1 auto;
-    min-width: 0;
-  }
-  .server-role-permission-title {
-    display: block;
-    color: var(--text-main);
-    font-size: 14px;
-    font-weight: 600;
-  }
-  .server-role-permission-desc {
-    display: block;
-    color: var(--text-muted);
-    font-size: 12px;
-    margin-top: 2px;
-  }
-  .server-role-permission-toggle {
-    position: relative;
-    width: 36px;
-    height: 20px;
-    flex: 0 0 auto;
-  }
-  .server-role-permission-toggle input {
-    appearance: none;
-    width: 100%;
-    height: 100%;
-    background: var(--bg-elevated);
-    border-radius: 999px;
-    cursor: pointer;
-    margin: 0;
-    position: relative;
-    transition: background 0.15s;
-  }
-  .server-role-permission-toggle input::after {
-    content: "";
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: #fff;
-    top: 3px;
-    left: 3px;
-    transition: left 0.15s;
-  }
-  .server-role-permission-toggle input:checked { background: var(--success); }
-  .server-role-permission-toggle input:checked::after { left: 19px; }
-  .modal-btn-danger {
-    background: var(--danger) !important;
-    color: #fff;
-  }
-  .modal-btn-danger:hover { filter: brightness(1.08); }
-
-  @media (max-width: 700px) {
-    .server-roles-layout { grid-template-columns: 1fr; }
-    .server-roles-sidebar {
-      border-right: none;
-      border-bottom: 1px solid var(--surface-border);
-      padding-right: 0;
-      padding-bottom: 8px;
-    }
-  }
+}
 
 .ctx-menu {
   background: var(--bg-tertiary);
@@ -6329,14 +5916,8 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
 .mobile-sheet-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.6);
   z-index: 9998;
-  animation: fadeInBackdrop 180ms ease;
-}
-
-@keyframes fadeInBackdrop {
-  from { opacity: 0; }
-  to   { opacity: 1; }
 }
 
 .mobile-sheet {
@@ -6348,11 +5929,11 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   max-height: 80vh;
   overflow-y: auto;
   background: var(--bg-tertiary);
-  border-radius: 16px 16px 0 0;
+  border-radius: 12px 12px 0 0;
   padding: 0 0 max(16px, env(safe-area-inset-bottom)) 0;
   z-index: 9999;
   transform: translateY(100%);
-  transition: transform 220ms cubic-bezier(0.32, 0.72, 0, 1);
+  transition: transform 220ms ease;
   overscroll-behavior: contain;
 }
 
@@ -6395,17 +5976,15 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   padding: 14px 16px;
   background: var(--bg-elevated);
   border: 1px solid var(--surface-border);
-  border-radius: 10px;
+  border-radius: 8px;
   color: var(--text-main);
   font-size: 15px;
   text-align: left;
   cursor: pointer;
-  transition: background 80ms, transform 80ms;
 }
 
 .mobile-sheet-btn:active {
   background: var(--bg-hover);
-  transform: scale(0.98);
 }
 
 .mobile-sheet-btn--danger {
@@ -6438,17 +6017,9 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
 #tutorialSpotlight {
   position: fixed;
   border-radius: 8px;
-  box-shadow:
-    0 0 0 4px var(--accent),
-    0 0 0 9999px rgba(0,0,0,0.62);
-  transition: all 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 0 4px var(--accent), 0 0 0 9999px rgba(0,0,0,0.62);
+  transition: all 280ms ease;
   pointer-events: none;
-  animation: tutorialPulse 2s ease-in-out infinite;
-}
-
-@keyframes tutorialPulse {
-  0%, 100% { box-shadow: 0 0 0 4px var(--accent), 0 0 0 9999px rgba(0,0,0,0.62); }
-  50%       { box-shadow: 0 0 0 7px var(--accent-strong), 0 0 0 9999px rgba(0,0,0,0.62); }
 }
 
 #tutorialCard {
@@ -6456,18 +6027,11 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   width: 280px;
   background: var(--bg-tertiary);
   border: 1px solid var(--accent);
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 16px;
   box-shadow: 0 12px 40px rgba(0,0,0,0.7);
   pointer-events: all;
-  transition: left 280ms cubic-bezier(0.4, 0, 0.2, 1),
-              top  280ms cubic-bezier(0.4, 0, 0.2, 1);
-  animation: tutorialCardIn 200ms ease;
-}
-
-@keyframes tutorialCardIn {
-  from { opacity: 0; transform: scale(0.92); }
-  to   { opacity: 1; transform: scale(1); }
+  transition: left 280ms ease, top 280ms ease;
 }
 
 #tutorialCardTitle {
@@ -6507,7 +6071,6 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   border-radius: 50%;
   background: var(--bg-elevated);
   border: 1px solid var(--text-muted);
-  transition: background 160ms;
 }
 
 .tutorial-dot--active {
@@ -6522,10 +6085,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   font-weight: 600;
   cursor: pointer;
   border: none;
-  transition: filter 120ms;
 }
-
-.tutorial-btn:hover { filter: brightness(1.12); }
 
 .tutorial-btn--skip {
   background: transparent;
@@ -6545,12 +6105,12 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   bottom: 0;
   z-index: 100001;
   background: var(--bg-tertiary);
-  border-radius: 20px 20px 0 0;
+  border-radius: 12px 12px 0 0;
   padding: 0 20px max(24px, env(safe-area-inset-bottom)) 20px;
   box-shadow: 0 -8px 40px rgba(0,0,0,0.55);
   border-top: 1px solid var(--surface-border);
   transform: translateY(100%);
-  transition: transform 260ms cubic-bezier(0.32, 0.72, 0, 1);
+  transition: transform 260ms ease;
   overscroll-behavior: contain;
   touch-action: pan-y;
 }
@@ -6620,29 +6180,21 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   border-radius: 50%;
   background: var(--bg-elevated);
   border: 1.5px solid var(--text-muted);
-  transition: background 160ms, border-color 160ms, transform 160ms;
 }
 
 .mts-dot--active {
   background: var(--accent);
   border-color: var(--accent);
-  transform: scale(1.25);
 }
 
 .mts-btn {
   padding: 10px 16px;
-  border-radius: 10px;
+  border-radius: 6px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   border: none;
   min-width: 72px;
-  transition: filter 120ms, transform 80ms;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.mts-btn:active {
-  transform: scale(0.96);
 }
 
 .mts-btn--skip {
@@ -6656,14 +6208,12 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   color: #fff;
 }
 
-.mts-btn--next:hover { filter: brightness(1.1); }
-
 #mobileTutorialCoachMark {
   position: absolute;   
-  border-radius: 10px;
+  border-radius: 8px;
   pointer-events: none;
   z-index: 100000;
-  border: 2.5px solid var(--accent);
+  border: 2px solid var(--accent);
   box-shadow: 0 0 0 4px rgba(88, 101, 242, 0.18);
   opacity: 0;
   transition: opacity 220ms ease;
@@ -6671,24 +6221,9 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
 
 #mobileTutorialCoachMark.mts-coach--visible {
   opacity: 1;
-  animation: mtsCoachPulse 1.8s ease-in-out infinite;
 }
 
-@keyframes mtsCoachPulse {
-  0%, 100% {
-    box-shadow: 0 0 0 4px rgba(88, 101, 242, 0.18);
-    border-color: var(--accent);
-  }
-  50% {
-    box-shadow: 0 0 0 8px rgba(88, 101, 242, 0.08);
-    border-color: var(--accent-strong);
-  }
-}
-
-/* ===============================
-   CHANNEL MENTION BADGES
-   =============================== */
-
+/* CHANNEL MENTION BADGES */
 .channel {
   position: relative;
 }
@@ -6741,28 +6276,23 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   font-weight: 600;
 }
 
-/* ===============================
-   INBOX BUTTON (chat header)
-   =============================== */
-
+/* INBOX BUTTON */
 #inboxToggle {
   background: rgba(255,255,255,0.04);
   border: 1px solid transparent;
   cursor: pointer;
   font-size: 15px;
   padding: 6px 8px;
-  border-radius: 10px;
+  border-radius: 6px;
   color: var(--text-muted);
   flex-shrink: 0;
-  transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.15s;
+  transition: background 0.15s, color 0.15s;
   position: relative;
 }
 
 #inboxToggle:hover {
   background: rgba(255,255,255,0.08);
   color: var(--text-main);
-  border-color: rgba(255,255,255,0.08);
-  transform: translateY(-1px);
 }
 
 #inboxToggle.active {
@@ -6798,22 +6328,12 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   pointer-events: none;
 }
 
-/* ===============================
-   INBOX MODAL (centered window)
-   =============================== */
-
+/* INBOX MODAL */
 .inbox-overlay {
   position: fixed;
   inset: 0;
   z-index: 1099;
   background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
-  animation: inboxFadeIn 0.15s ease;
-}
-
-@keyframes inboxFadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
 }
 
 .inbox-modal {
@@ -6826,21 +6346,14 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   max-height: 78vh;
   background: var(--bg-tertiary);
   border: 1px solid var(--surface-border);
-  border-radius: 16px;
-  box-shadow: 0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04);
+  border-radius: 12px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.7);
   z-index: 1100;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  animation: inboxPopIn 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@keyframes inboxPopIn {
-  from { opacity: 0; transform: translate(-50%, -48%) scale(0.93); }
-  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-}
-
-/* --- Header --- */
 .inbox-modal-header {
   display: flex;
   align-items: center;
@@ -6848,7 +6361,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   padding: 16px 20px 14px;
   border-bottom: 1px solid var(--surface-border);
   flex-shrink: 0;
-  background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, transparent 100%);
+  background: var(--bg-tertiary);
 }
 
 .inbox-modal-title {
@@ -6858,7 +6371,6 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   font-size: 16px;
   font-weight: 700;
   color: var(--text-main);
-  letter-spacing: -0.01em;
 }
 
 .inbox-bell-icon {
@@ -6877,35 +6389,33 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   align-items: center;
   gap: 5px;
   padding: 5px 10px;
-  border-radius: 8px;
+  border-radius: 6px;
   border: 1px solid var(--surface-border);
   background: rgba(255,255,255,0.05);
   color: var(--text-muted);
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.12s, color 0.12s, border-color 0.12s;
+  transition: background 0.12s, color 0.12s;
   white-space: nowrap;
 }
 
 .inbox-hdr-btn:hover {
   background: rgba(255,255,255,0.1);
   color: var(--text-main);
-  border-color: rgba(255,255,255,0.14);
 }
 
 .inbox-hdr-btn.inbox-hdr-icon {
   padding: 5px 7px;
 }
 
-/* --- Filter tabs --- */
 .inbox-filter-tabs {
   display: flex;
   gap: 2px;
   padding: 10px 16px 0;
   border-bottom: 1px solid var(--surface-border);
   flex-shrink: 0;
-  background: rgba(255,255,255,0.015);
+  background: var(--bg-tertiary);
 }
 
 .inbox-tab {
@@ -6938,10 +6448,8 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   right: 0;
   height: 2px;
   background: var(--accent);
-  border-radius: 2px 2px 0 0;
 }
 
-/* --- Content list --- */
 .inbox-content {
   flex: 1;
   overflow-y: auto;
@@ -6976,7 +6484,6 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   opacity: 0.4;
 }
 
-/* --- Inbox item --- */
 .inbox-item {
   display: flex;
   align-items: flex-start;
@@ -7112,7 +6619,6 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   opacity: 0.7;
 }
 
-/* Scrollbar styling */
 .inbox-content::-webkit-scrollbar { width: 4px; }
 .inbox-content::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
 
@@ -7126,22 +6632,16 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
     width: 100%;
     max-width: 100%;
     max-height: 85vh;
-    border-radius: 16px 16px 0 0;
-    animation: inboxSlideUp 0.2s ease;
-  }
-
-  @keyframes inboxSlideUp {
-    from { transform: translateY(100%); }
-    to   { transform: translateY(0); }
+    border-radius: 12px 12px 0 0;
   }
 }
+
 .chat-header {
   min-height: 58px;
   padding: 10px 16px;
   gap: 8px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent), var(--bg-tertiary);
+  background: var(--bg-tertiary);
   border-bottom: 1px solid var(--surface-border);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
 
 .chat-header > button {
@@ -7152,11 +6652,11 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   justify-content: center;
   flex: 0 0 38px;
   border: 1px solid var(--surface-border);
-  border-radius: 11px;
+  border-radius: 8px;
   background: rgba(255, 255, 255, 0.035);
   color: var(--text-muted);
   cursor: pointer;
-  transition: color 140ms ease, background 140ms ease, border-color 140ms ease, transform 140ms ease;
+  transition: color 140ms ease, background 140ms ease, border-color 140ms ease;
 }
 
 .chat-header > button:hover,
@@ -7164,10 +6664,6 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   color: var(--text-main);
   background: rgba(88, 101, 242, 0.16);
   border-color: rgba(88, 101, 242, 0.45);
-}
-
-.chat-header > button:active {
-  transform: scale(0.96);
 }
 
 .chat-header > button:focus-visible,
@@ -7181,10 +6677,8 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   flex-basis: 264px;
   min-width: 0;
   overflow: hidden;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 180px), var(--bg-secondary);
+  background: var(--bg-secondary);
   border-left: 1px solid var(--surface-border);
-  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.08);
-  transition: width 180ms ease, flex-basis 180ms ease;
 }
 
 .member-list-header {
@@ -7195,6 +6689,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   gap: 8px;
   border-bottom: 1px solid var(--surface-border);
   color: var(--text-main);
+  background: var(--bg-secondary);
 }
 
 .member-list-header > button {
@@ -7204,7 +6699,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   align-items: center;
   justify-content: center;
   border: 1px solid var(--surface-border);
-  border-radius: 10px;
+  border-radius: 6px;
   background: rgba(255, 255, 255, 0.035);
   color: var(--text-muted);
   cursor: pointer;
@@ -7246,21 +6741,18 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
   margin: 2px 0;
   padding: 6px 8px;
   border: 1px solid transparent;
-  border-radius: 10px;
-  transition: background 140ms ease, border-color 140ms ease;
+  border-radius: 6px;
+  transition: background 140ms ease;
 }
 
 .member-item:hover {
   background: rgba(255, 255, 255, 0.055);
-  border-color: rgba(255, 255, 255, 0.045);
-  transform: none;
 }
 
 .member-avatar {
   flex: 0 0 34px;
   width: 34px;
   height: 34px;
-  box-shadow: 0 0 0 2px var(--bg-secondary);
 }
 
 .member-name {
@@ -7286,7 +6778,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
     width: 40px;
     height: 40px;
     flex-basis: 40px;
-    border-radius: 12px;
+    border-radius: 8px;
   }
 
   .member-list,
@@ -7300,7 +6792,7 @@ li:not(.admin):not(.manager):not(.sysmanager):not(.sysadmin) .username {
     flex-basis: auto;
     padding-bottom: env(safe-area-inset-bottom);
     border-left: 1px solid var(--surface-border);
-    border-radius: 18px 0 0 18px;
+    border-radius: 12px 0 0 12px;
     box-shadow: -16px 0 44px rgba(0, 0, 0, 0.38);
     transform: translateX(102%);
     transition: transform 200ms ease;
