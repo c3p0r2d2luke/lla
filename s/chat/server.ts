@@ -72,6 +72,7 @@ function requiredEnvironmentValue(name: string): string {
 const supabaseUrl = requiredEnvironmentValue("SUPABASE_URL");
 const supabaseKey = requiredEnvironmentValue("SUPABASE_PUBLISHABLE_KEY");
 const supabaseProxyPath = chatBasePath ? `${chatBasePath}/supabase` : "/supabase";
+const supabaseProxyPaths = [...new Set([supabaseProxyPath, ...(chatBasePath ? ["/supabase"] : [])])];
 const publicConfig = {
   SUPABASE_URL: supabaseProxyPath,
   SPOTIFY_CLIENT_ID: requiredEnvironmentValue("SPOTIFY_CLIENT_ID"),
@@ -86,11 +87,21 @@ const supabaseProxy = httpProxy.createProxyServer({
 });
 function replaceProxyKey(proxyRequest: import("node:http").ClientRequest): void {
   proxyRequest.setHeader("apikey", supabaseKey);
+  if (proxyRequest.getHeader("authorization") === "Bearer chat-browser-proxy") {
+    proxyRequest.setHeader("authorization", `Bearer ${supabaseKey}`);
+  }
   const upstreamUrl = new URL(proxyRequest.path, "http://localhost");
   if (upstreamUrl.searchParams.has("apikey")) {
     upstreamUrl.searchParams.set("apikey", supabaseKey);
     proxyRequest.path = `${upstreamUrl.pathname}${upstreamUrl.search}`;
   }
+}
+
+function getSupabaseUpstreamPath(pathname: string): string | null {
+  const proxyPath = supabaseProxyPaths.find(
+    (path) => pathname === path || pathname.startsWith(`${path}/`),
+  );
+  return proxyPath ? pathname.slice(proxyPath.length) || "/" : null;
 }
 
 supabaseProxy.on("proxyReq", replaceProxyKey);
@@ -134,8 +145,8 @@ const server = createServer(async (request, response) => {
     return;
   }
 
-  if (pathname === supabaseProxyPath || pathname.startsWith(`${supabaseProxyPath}/`)) {
-    const upstreamPath = pathname.slice(supabaseProxyPath.length) || "/";
+  const upstreamPath = getSupabaseUpstreamPath(pathname);
+  if (upstreamPath !== null) {
     const allowedApi = [
       "/auth/v1",
       "/rest/v1",
@@ -273,12 +284,12 @@ server.on("upgrade", (request, socket, head) => {
     return;
   }
 
-  if (pathname !== supabaseProxyPath && !pathname.startsWith(`${supabaseProxyPath}/`)) {
+  const upstreamPath = getSupabaseUpstreamPath(pathname);
+  if (upstreamPath === null) {
     socket.destroy();
     return;
   }
 
-  const upstreamPath = pathname.slice(supabaseProxyPath.length) || "/";
   if (!upstreamPath.startsWith("/realtime/v1/")) {
     socket.destroy();
     return;

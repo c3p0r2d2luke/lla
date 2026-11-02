@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  color-scheme: dark;
+  font-family: "DM Sans", sans-serif;
+  background: #101318;
+  color: #f4f5f7;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --muted: #8d929d;
+  --green: #b7f36b;
+  --line: #292d35;
+}
+
+* { box-sizing: border-box; }
+body { min-width: 320px; min-height: 100vh; margin: 0; background: radial-gradient(ellipse at 71% 46%, #1c2027 0, #101318 54%); }
+.topbar { height: 76px; padding: 0 6.4%; border-bottom: 1px solid rgba(255,255,255,.07); display: flex; align-items: center; justify-content: space-between; }
+.brand { display: inline-flex; align-items: center; gap: 11px; color: #f5f6f7; font-size: 15px; font-weight: 700; letter-spacing: -.35px; text-decoration: none; }
+.brand-mark { display: grid; place-items: center; width: 27px; height: 27px; border-radius: 8px; background: var(--green); color: #101318; font-size: 12px; }
+.brand-light { color: #969ba5; font-weight: 500; }
+.connection { display: flex; align-items: center; gap: 9px; color: #a7abb3; font: 11px "DM Mono", monospace; }
+.status-dot, .runtime-indicator { width: 7px; height: 7px; display: inline-block; border-radius: 50%; background: #777d87; }
+.status-dot.online, .runtime-indicator.online { background: var(--green); box-shadow: 0 0 10px #b7f36b77; }
+.layout { max-width: 1190px; margin: 0 auto; min-height: calc(100vh - 76px); padding: 57px 36px 70px; display: grid; grid-template-columns: minmax(360px, 1fr) minmax(330px, .85fr); gap: 12%; align-items: center; }
+.intro { max-width: 465px; }
+.eyebrow { color: #8e949d; font: 10px "DM Mono", monospace; letter-spacing: 1.4px; }
+.eyebrow > span { display: inline-block; width: 6px; height: 6px; margin: 0 7px 1px 0; border-radius: 50%; background: var(--green); }
+h1 { margin: 20px 0 15px; font-size: clamp(40px, 4.5vw, 58px); line-height: 1.06; letter-spacing: -3px; }
+h1 span { color: #777e89; }
+.intro-copy { max-width: 380px; margin: 0; color: #9da2ac; font-size: 14px; line-height: 1.7; }
+.privacy-note { display: flex; gap: 12px; align-items: center; margin: 25px 0 22px; color: #e4e7e9; font-size: 11px; line-height: 1.7; }
+.privacy-note strong { font-size: 11px; font-weight: 600; }
+.privacy-note div span { color: #858b95; }
+.lock-icon { width: 30px; height: 30px; display: grid; place-items: center; flex: 0 0 30px; border: 1px solid #343a43; border-radius: 9px; color: var(--green); font-size: 12px; }
+.upload-card { min-height: 238px; border: 1px dashed #454a53; border-radius: 13px; background: #171a20b8; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: border-color .2s, background .2s; }
+.upload-card.dragging { border-color: var(--green); background: #1d2518; }
+.upload-icon { width: 36px; height: 36px; display: grid; place-items: center; margin-bottom: 8px; border-radius: 10px; background: #262b32; color: var(--green); }
+.upload-icon svg { width: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.upload-card h2 { margin: 5px 0; font-size: 14px; font-weight: 600; }
+.upload-card p { margin: 2px 0 14px; color: #858b95; font-size: 11px; }
+.button { border: 0; border-radius: 7px; padding: 10px 14px; font: 600 11px "DM Sans", sans-serif; cursor: pointer; }
+.button-primary { background: var(--green); color: #151912; }
+.button-primary:hover { background: #c8ff82; }
+.button-primary span { margin-left: 8px; }
+.upload-card .file-limit { margin: 11px 0 0; color: #686e78; font-size: 10px; }
+.file-name { max-width: 90%; margin-top: 10px; overflow: hidden; color: var(--green); font: 10px "DM Mono", monospace; text-overflow: ellipsis; white-space: nowrap; }
+.fine-print { margin-top: 14px; color: #777d87; font-size: 10px; line-height: 1.6; }
+.device-section { width: min(100%, 380px); justify-self: center; }
+.device-heading { display: flex; align-items: center; justify-content: space-between; margin: 0 3px 14px; }
+.device-heading h2 { margin: 5px 0 0; font-size: 17px; font-weight: 600; }
+.icon-button { width: 32px; height: 32px; border: 1px solid #333842; border-radius: 8px; background: #191c22; color: #b5bac2; font-size: 19px; cursor: pointer; }
+.icon-button:hover { border-color: #666d78; color: white; }
+.device-frame { width: min(100%, 285px); height: 516px; margin: auto; padding: 29px 11px 25px; position: relative; overflow: hidden; border: 1px solid #515761; border-radius: 37px; background: linear-gradient(120deg,#292e36,#090a0d 35%,#1a1e24 100%); box-shadow: 0 26px 70px #0008, inset 0 0 0 2px #08090b; }
+.device-camera { position: absolute; z-index: 1; top: 12px; left: 50%; width: 42px; height: 6px; border-radius: 6px; background: #070809; transform: translateX(-50%); }
+.device-screen { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 22px; background: #141820; touch-action: none; cursor: crosshair; }
+.device-screen img { width: 100%; height: 100%; display: block; object-fit: fill; user-select: none; }
+.screen-placeholder, .screen-loading { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 25px; text-align: center; }
+.screen-placeholder { color: #8b929d; }
+.screen-placeholder strong { color: #dfe2e5; font-size: 12px; font-weight: 600; }
+.screen-placeholder > span { max-width: 190px; font-size: 10px; line-height: 1.6; }
+.android-mark { color: var(--green); font-size: 39px; }
+.screen-loading { background: #141820e8; color: #c4c8cf; font: 10px "DM Mono", monospace; }
+.spinner { width: 22px; height: 22px; border: 2px solid #444b53; border-top-color: var(--green); border-radius: 50%; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.device-home { position: absolute; left: 50%; bottom: 9px; width: 53px; height: 4px; border-radius: 4px; background: #555a62; transform: translateX(-50%); }
+.device-controls { display: flex; width: min(100%, 285px); margin: 14px auto 0; justify-content: space-around; }
+.control-button { width: 34px; height: 29px; border: 0; background: transparent; color: #858b95; font-size: 22px; line-height: 1; cursor: pointer; }
+.control-button:hover { color: var(--green); }
+.runtime-caption { margin-top: 13px; display: flex; justify-content: center; align-items: center; gap: 8px; color: #848a94; font: 9px "DM Mono", monospace; }
+.caption-separator { color: #454b55; }
+.toast { position: fixed; right: 24px; bottom: 24px; max-width: min(380px, calc(100vw - 48px)); padding: 12px 16px; border: 1px solid #454b55; border-radius: 9px; background: #22262e; color: #eef0f3; font-size: 12px; line-height: 1.5; opacity: 0; pointer-events: none; transform: translateY(7px); transition: .2s; }
+.toast.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 770px) {
+  .topbar { height: 64px; padding: 0 22px; }
+  .layout { padding: 45px 22px 50px; grid-template-columns: 1fr; gap: 48px; }
+  .intro { width: min(100%, 465px); margin: auto; }
+  .device-section { grid-row: 2; }
+  h1 { font-size: clamp(43px, 10vw, 58px); }
+}
+@media (max-width: 390px) {
+  .device-frame { height: 480px; }
+  .connection { font-size: 9px; }
+}

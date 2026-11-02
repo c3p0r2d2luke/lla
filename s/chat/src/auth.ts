@@ -542,12 +542,20 @@ async function doSignIn() {
     return;
   }
 
-  const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-  if (error) {
-    setInlineAuthNotice("signInError", "❌ " + error.message);
-    return;
+  try {
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    if (error) {
+      setInlineAuthNotice("signInError", "❌ " + error.message);
+      return;
+    }
+    await handleAuthSuccess(data.user);
+  } catch (error) {
+    console.error("Sign-in request failed:", error);
+    setInlineAuthNotice(
+      "signInError",
+      "❌ Login request failed. Please try again. If this continues, check the chat server's Supabase configuration."
+    );
   }
-  await handleAuthSuccess(data.user);
 }
 
 async function sendMagicLink() {

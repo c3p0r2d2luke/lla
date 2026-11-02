@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101318">
+  <title>APK Playground</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="APK Playground home">
+      <span class="brand-mark">▶</span>
+      <span>APK<span class="brand-light"> Playground</span></span>
+    </a>
+    <div class="connection"><span class="status-dot" id="connection-dot"></span><span id="connection-label">Checking emulator</span></div>
+  </header>
+
+  <main class="layout">
+    <section class="intro">
+      <div class="eyebrow"><span></span> ANDROID APP TESTING</div>
+      <h1>Your app,<br><span>in a safe little sandbox.</span></h1>
+      <p class="intro-copy">Drop in an APK and try it on a real Android runtime, right from your browser.</p>
+      <div class="privacy-note"><span class="lock-icon">◆</span><div><strong>Runs on your machine</strong><br><span>Files stay on this server and are installed on its Android emulator.</span></div></div>
+
+      <div class="upload-card" id="drop-zone">
+        <input id="file-input" type="file" accept=".apk,.zip,application/vnd.android.package-archive,application/zip" hidden>
+        <div class="upload-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M5 15v4h14v-4"/></svg>
+        </div>
+        <h2>Drop your app here</h2>
+        <p>APK, or ZIP containing a single APK</p>
+        <button class="button button-primary" id="choose-button" type="button">Choose a file <span>↗</span></button>
+        <p class="file-limit">Maximum file size: 300 MB</p>
+        <div id="file-name" class="file-name" hidden></div>
+      </div>
+
+      <div class="fine-print">Only install apps you trust. Uploaded apps run with the permissions available to the emulator.</div>
+    </section>
+
+    <section class="device-section" aria-label="Android emulator">
+      <div class="device-heading">
+        <div><span class="eyebrow">LIVE PREVIEW</span><h2>Emulator</h2></div>
+        <button class="icon-button" id="refresh-button" type="button" aria-label="Refresh emulator screen" title="Refresh screen">↻</button>
+      </div>
+      <div class="device-frame">
+        <div class="device-camera"></div>
+        <div class="device-screen" id="device-screen">
+          <img id="screen-image" alt="Android emulator screen" draggable="false" hidden>
+          <div class="screen-placeholder" id="screen-placeholder">
+            <div class="android-mark">✳</div>
+            <strong id="screen-title">Ready when you are</strong>
+            <span id="screen-message">Upload an APK to start the emulator.</span>
+          </div>
+          <div class="screen-loading" id="screen-loading" hidden><span class="spinner"></span><span id="loading-message">Starting emulator…</span></div>
+        </div>
+        <div class="device-home"></div>
+      </div>
+      <div class="device-controls">
+        <button class="control-button" type="button" data-key="4" aria-label="Back" title="Back">‹</button>
+        <button class="control-button" type="button" data-key="3" aria-label="Home" title="Home">○</button>
+        <button class="control-button" type="button" data-key="187" aria-label="Recent apps" title="Recent apps">▢</button>
+      </div>
+      <div class="runtime-caption"><span class="runtime-indicator"></span><span id="runtime-caption">Waiting for an app</span><span class="caption-separator">·</span><span>Android emulator</span></div>
+    </section>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

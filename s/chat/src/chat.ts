@@ -1545,18 +1545,36 @@ async function sendMessage(options: { overrideContent?: string; bypassLinkCheck?
       messageData.reply_to = replyingTo;
     }
 
+    let insertedMessage = null;
     let error = null;
     if (currentConversationType === "dm") {
       messageData.conversation_id = currentDmConversationId;
-      ({ error } = await supabaseClient.from("dm_messages").insert([messageData]));
+      ({ data: insertedMessage, error } = await supabaseClient
+        .from("dm_messages")
+        .insert([messageData])
+        .select("*")
+        .single());
     } else {
       messageData.channel_id = currentChannelId;
-      ({ error } = await supabaseClient.from("messages").insert([messageData]));
+      ({ data: insertedMessage, error } = await supabaseClient
+        .from("messages")
+        .insert([messageData])
+        .select("*")
+        .single());
     }
 
     if (!error) {
       input.value = "";
       hideMentionSuggestions();
+      if (
+        insertedMessage
+        && ((currentConversationType === "dm"
+          && String(insertedMessage.conversation_id) === String(currentDmConversationId))
+          || (currentConversationType === "channel"
+            && String(insertedMessage.channel_id) === String(currentChannelId)))
+      ) {
+        renderMessage(insertedMessage);
+      }
       console.log("✅ Message sent to Supabase (IP: " + ip + ")");
 
       // Handle slash commands
