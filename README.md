@@ -1,34 +1,36 @@
 # Let's Learn Algebra
+![hackclub](https://hackatime.hackclub.com/api/v1/badge/U09S88YDUES/c3p0r2d2luke/lla)
+LLA is a masked g*me site, along with a full realtime chat, kind of like Discord. 
 
-Let's Learn Algebra is a unblocked g*me site for schools. It has CloudMoon, GN-Math, and more! 
-
-## Find your way around
-
-- `s/` contains the files served as the website.
-- `s/schoolwork/` contains standalone pages and projects.
-- `s/chat/` contains the chat app, its TypeScript source, and its Node.js
-  development/server setup.
-- `supabase/` contains database migrations and backend functions used by the
-  chat and other integrations.
-
-## Preview the site
-
-You can open a page in `s/` directly in a browser, or serve the folder over
-HTTP for a more realistic preview. For example, from the repository root:
-
+# Hosting Instructions
+To host this, run the following commands:
 ```sh
-npx serve s
+git clone https://github.com/c3p0r2d2luke/lla
+cd lla
 ```
+The site can be served statically (with the exception of things inside of `s/chat/`)
+# Folders & Navigation
+From the base index.html, you have some optional shortcuts to use:
+```
+ctrl + alt + C: The chat
+shift + X: G*mes
+```
+If you want to go to the folders without shortcuts, here's a cheat sheet:
 
-Then open the local URL printed by the server. The static site does not require
-the chat app's Node.js server.
+`s/`: The secret folder, that contains all of the g*mes, chat, etc.
 
-## Work on the chat app
+`s/schoolwork/`: The g*mes. Basically just a clond of GN-Math
 
-The chat has its own setup, including a Supabase backend and local environment
-configuration. Start with the [chat README](s/chat/README.md) before running
-its server; a fresh clone does not include project credentials or a configured
-backend.
+`s/chat/`: The chat. Needs to be built and run seperatly. (Follow the instructions of `s/chat/README.md`)
 
-## AI Usage
-AI was used to make basically the whole chat. AI was used to help setup the blog. This and other READMD.md files were made with assist by AI. Any further production as of (Oct. 28, 2026) will not be used with any AI
+`s/blog/`: This is the changelog of LLA. Optional to setup, and IDK if it will actually let you set it up.
+
+`s/cloud/`: Clone of CloudMoon GitHub repo.
+
+`s/other/`: Other stuff I maintain. (JS-DOS, APK Runner, File downloader, Stegonography kit, etc.)
+
+# About `bot/`
+`bot/` contains the legal information about my discord bot that you need to add to servers if you want to access your servers from the LLA chat.
+
+# AI Usage Declaration
+As of `Nov. 3, 2026`, I have used AI to make the chat. It also helped make `index.html` and `s/chat/README.md`. If you find any problems, please feel free to submit an issue or a pull request, and I will get around to that. As of this date, no more AI shall be used in the making of this project.

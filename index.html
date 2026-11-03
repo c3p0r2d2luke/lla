@@ -7,15 +7,15 @@
   <script>
 document.addEventListener("keydown", function(event) {
     // Shift + X → learn.html
-    if (event.shiftKey && !event.ctrlKey && !event.altKey && event.key.toLowerCase() === "x") {
+    if (event.shiftKey && event.key.toLowerCase() === "x") {
         event.preventDefault();
-        window.location.href = "s/learn.html";
+        window.location.href = "s/schoolwork/index.html";
     }
 
     // Ctrl + Alt + C → chatwithteachers.html (kept as-is)
     if (event.ctrlKey && event.altKey && event.key.toLowerCase() === "c") {
         event.preventDefault();
-        window.location.href = "s/chat.html";
+        window.location.href = "s/chat/index.html";
     }
 });
 </script>
