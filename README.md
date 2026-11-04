@@ -1,5 +1,6 @@
 # Let's Learn Algebra
 ![hackclub](https://hackatime.hackclub.com/api/v1/badge/U09S88YDUES/c3p0r2d2luke/lla)
+
 LLA is a masked g*me site, along with a full realtime chat, kind of like Discord. 
 
 # Hosting Instructions
