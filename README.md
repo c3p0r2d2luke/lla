@@ -3,6 +3,8 @@
 
 LLA is a masked g*me site, along with a full realtime chat, kind of like Discord. 
 
+![LLA](images/lla.png)
+
 # Hosting Instructions
 To host this, run the following commands:
 ```sh
@@ -22,13 +24,19 @@ If you want to go to the folders without shortcuts, here's a cheat sheet:
 
 `s/schoolwork/`: The g*mes. Basically just a clond of GN-Math
 
+![GN](images/gn.png)
+
 `s/chat/`: The chat. Needs to be built and run seperatly. (Follow the instructions of `s/chat/README.md`)
+
+![Screenshot](images/chat.png)
 
 `s/blog/`: This is the changelog of LLA. Optional to setup, and IDK if it will actually let you set it up.
 
 `s/cloud/`: Clone of CloudMoon GitHub repo.
 
 `s/other/`: Other stuff I maintain. (JS-DOS, APK Runner, File downloader, Stegonography kit, etc.)
+
+![Stego](images/stego.png)
 
 # About `bot/`
 `bot/` contains the legal information about my discord bot that you need to add to servers if you want to access your servers from the LLA chat.
